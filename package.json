@@ -1,0 +1,28 @@
+{
+  "name": "linting-script",
+  "version": "1.0.0",
+  "description": "Script to add Eslint & Prettier linting and code formatting in a Typescript project.",
+  "main": "index.js",
+  "scripts": {
+    "lint-setup": "node index.js"
+  },
+  "bin": {
+    "lint-setup": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Josh-Stillman/ts-eslint-prettier-install.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Josh-Stillman/ts-eslint-prettier-install/issues"
+  },
+  "homepage": "https://github.com/Josh-Stillman/ts-eslint-prettier-install#readme",
+  "dependencies": {
+    "commander": "6.2.0",
+    "execa": "4.1.0",
+    "inquirer": "7.3.3"
+  }
+}
