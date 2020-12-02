@@ -19,6 +19,24 @@ const execa = require('execa');
 const getArgs = require('./src/parseArgs').getArgs;
 const question = require('./src/questions').question;
 
+const getDepList = () => {
+  return ['eslint', 'prettier', '@typescript-eslint/eslint-plugin', '@typescript-eslint/parser', 'eslint-config-prettier', 'eslint-plugin-prettier', 'eslint-plugin-react', 'eslint-plugin-react-hooks']
+}
+
+const installDeps = async (useYarn) => {
+    const inst = execa(useYarn ? 'yarn' : 'npm', [useYarn ? 'add' : 'install', ...getDepList()], ['-E', '-D']);
+    // log results?
+}
+const getEslintRc = () => {
+  const baseRc = require('./src/eslintrc.json');
+  return JSON.stringify(baseRc, null, 2);
+}
+
+const getPrettierRc = () => {
+  const baseRc = require('./src/prettierrc.json');
+  return JSON.stringify(baseRc, null, 2);
+}
+
 const main = async () => {
   // 0. guarding on proper dir and has git
   const hasPackageJson = fs.existsSync(path.join(process.cwd(), 'package.json'));
@@ -64,11 +82,20 @@ const main = async () => {
   console.log("use yarn", useYarn)
 
 
+  fs.writeFileSync(path.join(process.cwd(), 'package.json'), newPkg)
+
+  const eslintRc = getEslintRc();
+  fs.writeFileSync(path.join(process.cwd(), '.eslintrc'), eslintRc)
+
+  const eslintRc = getPrettierRc();
+  fs.writeFileSync(path.join(process.cwd(), '.prettierrc'), prettierRc)
+
+
   // const subprocess = execa('echo', [newPkg])
   // subprocess.stdout.pipe(fs.createWriteStream('new.json'))
 
   // const inst = execa('npm', ['install', 'dotenv'], ['-E'])
-
+  installDeps(useYarn);
 }
 
 main();
