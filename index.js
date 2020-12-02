@@ -87,7 +87,7 @@ const main = async () => {
   const eslintRc = getEslintRc();
   fs.writeFileSync(path.join(process.cwd(), '.eslintrc'), eslintRc)
 
-  const eslintRc = getPrettierRc();
+  const prettierRc = getPrettierRc();
   fs.writeFileSync(path.join(process.cwd(), '.prettierrc'), prettierRc)
 
 
