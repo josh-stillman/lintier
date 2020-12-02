@@ -24,9 +24,12 @@ const getDepList = () => {
 }
 
 const installDeps = async (useYarn) => {
-    const inst = execa(useYarn ? 'yarn' : 'npm', [useYarn ? 'add' : 'install', ...getDepList()], ['-E', '-D']);
-    // log results?
+    const inst = execa(useYarn ? 'yarn' : 'npm', [useYarn ? 'add' : 'install', ...getDepList(), '-E', '-D']);
+    console.log('Installing dependencies...')
+    inst.stdout.pipe(process.stdout);
+    inst.stderr.pipe(process.stderr);
 }
+
 const getEslintRc = () => {
   const baseRc = require('./src/eslintrc.json');
   return JSON.stringify(baseRc, null, 2);
