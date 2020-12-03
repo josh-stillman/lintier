@@ -19,6 +19,9 @@ import execa from 'execa';
 import { getArgs } from './parseArgs';
 import { question } from './questions';
 
+import baseEslintRc  from './eslintrc.json';
+import basePrettierRc  from './prettierrc.json';
+
 const getDepList = () => {
   return ['eslint', 'prettier', '@typescript-eslint/eslint-plugin', '@typescript-eslint/parser', 'eslint-config-prettier', 'eslint-plugin-prettier', 'eslint-plugin-react', 'eslint-plugin-react-hooks']
 }
@@ -31,13 +34,11 @@ const installDeps = async (useYarn?: boolean) => {
 }
 
 const getEslintRc = () => {
-  const baseRc = require('./eslintrc.json');
-  return JSON.stringify(baseRc, null, 2);
+  return JSON.stringify(baseEslintRc, null, 2);
 }
 
 const getPrettierRc = () => {
-  const baseRc = require('./prettierrc.json');
-  return JSON.stringify(baseRc, null, 2);
+  return JSON.stringify(basePrettierRc, null, 2);
 }
 
 const main = async () => {
