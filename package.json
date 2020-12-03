@@ -6,7 +6,8 @@
   "scripts": {
     "lint-setup": "node index.js",
     "build": "rimraf ./bin && tsc",
-    "start": "npm run build && node bin/index.js"
+    "start": "npm run build && node bin/index.js",
+    "lint": "hello world"
   },
   "bin": {
     "lint-setup": "./bin/index.js"
@@ -31,6 +32,17 @@
     "@types/commander": "2.12.2",
     "@types/inquirer": "7.3.1",
     "@types/node": "14.14.10",
+    "@typescript-eslint/eslint-plugin": "4.9.0",
+    "@typescript-eslint/parser": "4.9.0",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "6.15.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-react-hooks": "4.0.0",
+    "prettier": "2.2.1",
     "rimraf": "3.0.2",
     "typescript": "4.1.2"
   }

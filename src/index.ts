@@ -1,4 +1,8 @@
 #! /usr/bin/env node
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
+/* eslint-disable no-console */
 
 // 1. parse cli options
 // 2. if none, prompt interactively
@@ -6,6 +10,7 @@
 // 1. install eslint deps
 // 2. write prettierRC
 // 3. write eslint (per options)
+// need to get path to tsconfig here.
 // 4. add lint scripts to package.json
 // 5. add stylelint deps
 // 6. add stylelintrc
@@ -19,40 +24,76 @@ import execa from 'execa';
 import { getArgs } from './parseArgs';
 import { question } from './questions';
 
-import baseEslintRc  from './eslintrc.json';
-import basePrettierRc  from './prettierrc.json';
+// make these objects instead.  it's js baby.
+import baseEslintRc from './eslintrc.json';
+import basePrettierRc from './prettierrc.json';
 
 const getDepList = () => {
-  return ['eslint', 'prettier', '@typescript-eslint/eslint-plugin', '@typescript-eslint/parser', 'eslint-config-prettier', 'eslint-plugin-prettier', 'eslint-plugin-react', 'eslint-plugin-react-hooks']
-}
+  return [
+    'eslint',
+    'prettier',
+    '@typescript-eslint/eslint-plugin',
+    '@typescript-eslint/parser',
+    'eslint-config-prettier',
+    'eslint-plugin-prettier',
+    'eslint-plugin-node',
+    'eslint-plugin-react',
+    'eslint-plugin-react-hooks',
+  ];
+};
 
 const installDeps = async (useYarn?: boolean) => {
-    const inst = execa(useYarn ? 'yarn' : 'npm', [useYarn ? 'add' : 'install', ...getDepList(), '-E', '-D']);
-    console.log('Installing dependencies...')
-    inst.stdout?.pipe(process.stdout);
-    inst.stderr?.pipe(process.stderr);
-}
+  const inst = execa(useYarn ? 'yarn' : 'npm', [
+    useYarn ? 'add' : 'install',
+    ...getDepList(),
+    '-E',
+    '-D',
+  ]);
+  console.log('Installing dependencies...');
+  // eslint-disable-next-line no-unused-expressions
+  inst.stdout?.pipe(process.stdout);
+  // eslint-disable-next-line no-unused-expressions
+  inst.stderr?.pipe(process.stderr);
+};
 
 const getEslintRc = () => {
   return JSON.stringify(baseEslintRc, null, 2);
-}
+};
 
 const getPrettierRc = () => {
   return JSON.stringify(basePrettierRc, null, 2);
-}
+};
+
+const installAirBnb = async (react = true, useYarn?: boolean) => {
+  const inst = execa('npx', [
+    'install-peerdeps',
+    `-D${useYarn ? 'Y' : ''}`,
+    '-x',
+    '-E',
+    react ? 'eslint-config-airbnb' : 'eslint-config-airbnb-base',
+  ]);
+
+  console.log('Installing airbnb...');
+  // eslint-disable-next-line no-unused-expressions
+  inst.stdout?.pipe(process.stdout);
+  // eslint-disable-next-line no-unused-expressions
+  inst.stderr?.pipe(process.stderr);
+};
 
 const main = async () => {
   // 0. guarding on proper dir and has git
-  const hasPackageJson = fs.existsSync(path.join(process.cwd(), 'package.json'));
+  const hasPackageJson = fs.existsSync(
+    path.join(process.cwd(), 'package.json')
+  );
   const hasGit = fs.existsSync(path.join(process.cwd(), '.git/'));
 
   if (!hasPackageJson) {
-    console.log("Missing package.json in directory.  Exiting");
+    console.log('Missing package.json in directory.  Exiting');
     exit(1);
   }
 
   if (!hasGit) {
-    console.log("No git detected.");
+    console.log('No git detected.');
     // prompt for continue?
     exit(1);
   }
@@ -73,33 +114,36 @@ const main = async () => {
 
   console.log(answers);
 
-  const oldPackageJson = require(path.join(process.cwd(), 'package.json'));
+  const oldPackageJson = require(path.join(
+    process.cwd(),
+    'package.json'
+  )) as Record<string, unknown>;
+
   // const obj = JSON.parse(oldPackageJson, JSON.stringify(oldPackageJson));
   // console.log('package json is', oldPackageJson)
 
-  oldPackageJson.scripts.lint = "hello world"
+  oldPackageJson.scripts = {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    ...(oldPackageJson.scripts as Object | undefined),
+    ...{ lint: 'hello world', 'lint:fix': 'asdf' },
+  };
 
-  const newPkg = JSON.stringify(oldPackageJson, null, 2)
-  console.log('new process json', newPkg)
-  console.log("has pkg json in dir", hasPackageJson)
-  console.log("has git in dir", hasGit)
-  console.log("use yarn", useYarn)
+  const newPkg = JSON.stringify(oldPackageJson, null, 2);
+  console.log('new process json', newPkg);
+  console.log('has pkg json in dir', hasPackageJson);
+  console.log('has git in dir', hasGit);
+  console.log('use yarn', useYarn);
 
-
-  fs.writeFileSync(path.join(process.cwd(), 'package.json'), newPkg)
+  fs.writeFileSync(path.join(process.cwd(), 'package.json'), newPkg);
 
   const eslintRc = getEslintRc();
-  fs.writeFileSync(path.join(process.cwd(), '.eslintrc'), eslintRc)
+  fs.writeFileSync(path.join(process.cwd(), '.eslintrc'), eslintRc);
 
   const prettierRc = getPrettierRc();
-  fs.writeFileSync(path.join(process.cwd(), '.prettierrc'), prettierRc)
+  fs.writeFileSync(path.join(process.cwd(), '.prettierrc'), prettierRc);
 
+  await installDeps(useYarn);
+  await installAirBnb();
+};
 
-  // const subprocess = execa('echo', [newPkg])
-  // subprocess.stdout.pipe(fs.createWriteStream('new.json'))
-
-  // const inst = execa('npm', ['install', 'dotenv'], ['-E'])
-  installDeps(useYarn);
-}
-
-main();
+main().catch(err => console.error(err));

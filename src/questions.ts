@@ -2,8 +2,8 @@
 
 import inquirer from 'inquirer';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const question = async () => {
-
   const questions = [
     {
       type: 'list',
@@ -11,10 +11,10 @@ export const question = async () => {
       message: 'Please choose which project template to use',
       choices: ['JavaScript', 'TypeScript'],
       default: 'Typescript',
-    }
+    },
   ];
 
-  const answers = await inquirer.prompt(questions);
-
-  return answers;
-}
+  return (inquirer.prompt(questions) as unknown) as {
+    [key: string]: boolean | string | undefined;
+  };
+};
