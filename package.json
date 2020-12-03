@@ -4,7 +4,6 @@
   "description": "Setup Eslint & Prettier in Typescript projects.",
   "main": "./bin/index.js",
   "scripts": {
-    "lint-setup": "node index.js",
     "build": "rimraf ./bin && tsc",
     "start": "npm run build && node bin/index.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
@@ -15,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Josh-Stillman/ts-eslint-prettier-install.git"
+    "url": "git+https://github.com/Josh-Stillman/lintier.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Josh-Stillman/ts-eslint-prettier-install/issues"
+    "url": "https://github.com/Josh-Stillman/lintier/issues"
   },
-  "homepage": "https://github.com/Josh-Stillman/ts-eslint-prettier-install#readme",
+  "homepage": "https://github.com/Josh-Stillman/lintier#readme",
   "dependencies": {
     "commander": "6.2.0",
     "execa": "4.1.0",
