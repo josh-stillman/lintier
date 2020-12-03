@@ -10,9 +10,7 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix ."
   },
-  "bin": {
-    "lint-setup": "./bin/index.js"
-  },
+  "bin": "./bin/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Josh-Stillman/ts-eslint-prettier-install.git"
