@@ -2,14 +2,14 @@
   "name": "linting-script",
   "version": "1.0.0",
   "description": "Script to add Eslint & Prettier linting and code formatting in a Typescript project.",
-  "main": "index.js",
+  "main": "./bin/index.js",
   "scripts": {
     "lint-setup": "node index.js",
-    "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/index.js"
+    "build": "rimraf ./bin && tsc",
+    "start": "npm run build && node bin/index.js"
   },
   "bin": {
-    "lint-setup": "./index.js"
+    "lint-setup": "./bin/index.js"
   },
   "repository": {
     "type": "git",
