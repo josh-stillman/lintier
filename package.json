@@ -4,7 +4,9 @@
   "description": "Script to add Eslint & Prettier linting and code formatting in a Typescript project.",
   "main": "index.js",
   "scripts": {
-    "lint-setup": "node index.js"
+    "lint-setup": "node index.js",
+    "build": "rimraf ./build && tsc",
+    "start": "npm run build && node build/index.js"
   },
   "bin": {
     "lint-setup": "./index.js"
@@ -24,5 +26,10 @@
     "commander": "6.2.0",
     "execa": "4.1.0",
     "inquirer": "7.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "14.14.10",
+    "rimraf": "3.0.2",
+    "typescript": "4.1.2"
   }
 }

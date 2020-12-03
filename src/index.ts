@@ -16,8 +16,8 @@ const path = require('path');
 const { exit } = require('process');
 const execa = require('execa');
 
-const getArgs = require('./src/parseArgs').getArgs;
-const question = require('./src/questions').question;
+const getArgs = require('./parseArgs').getArgs;
+const question = require('./questions').question;
 
 const getDepList = () => {
   return ['eslint', 'prettier', '@typescript-eslint/eslint-plugin', '@typescript-eslint/parser', 'eslint-config-prettier', 'eslint-plugin-prettier', 'eslint-plugin-react', 'eslint-plugin-react-hooks']
@@ -31,12 +31,12 @@ const installDeps = async (useYarn) => {
 }
 
 const getEslintRc = () => {
-  const baseRc = require('./src/eslintrc.json');
+  const baseRc = require('./eslintrc.json');
   return JSON.stringify(baseRc, null, 2);
 }
 
 const getPrettierRc = () => {
-  const baseRc = require('./src/prettierrc.json');
+  const baseRc = require('./prettierrc.json');
   return JSON.stringify(baseRc, null, 2);
 }
 
