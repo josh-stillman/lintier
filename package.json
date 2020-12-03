@@ -7,7 +7,8 @@
     "lint-setup": "node index.js",
     "build": "rimraf ./bin && tsc",
     "start": "npm run build && node bin/index.js",
-    "lint": "hello world"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix ."
   },
   "bin": {
     "lint-setup": "./bin/index.js"
@@ -39,6 +40,7 @@
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-hooks": "4.0.0",

@@ -1,9 +1,20 @@
-#! /usr/bin/env node
-
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 /* eslint-disable no-console */
+
+// TODO:
+// 1. parse options and install accordingly
+// 1. logging about what is being installed (proejct type)
+// 2. edit eslint accordingly
+// 3. prune unused rules.  (Try out on react projects.  iching)
+// 4. stylelint
+// 5. husky
+// 6. clean up and organize code
+// 7. test locally, test on npm/npx.
+// 7. help explaining how it's used.
+
+// ///////
 
 // 1. parse cli options
 // 2. if none, prompt interactively
@@ -26,8 +37,8 @@ import { getArgs } from './parseArgs';
 import { question } from './questions';
 
 // make these objects instead.  it's js baby.
-import baseEslintRc from './eslintrc.json';
-import basePrettierRc from './prettierrc.json';
+import { baseEslintRc } from './baseEslintRc';
+import { basePrettierRc } from './basePrettierRc';
 
 const getDepList = () => {
   return [
@@ -114,6 +125,7 @@ const main = async () => {
   }
 
   console.log(answers);
+  console.log('here');
 
   const oldPackageJson = require(path.join(
     process.cwd(),

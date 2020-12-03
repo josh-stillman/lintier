@@ -2,6 +2,7 @@
   "extends": [
     "airbnb",
     "eslint:recommended",
+    "plugin:node/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
@@ -52,7 +53,10 @@
     "react/state-in-constructor": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/extensions": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "node/no-unsupported-features/es-syntax": "off",
+    "node/no-missing-import": "off",
+    "node/shebang": "off"
   }
 }
