@@ -1,6 +1,6 @@
 {
   "name": "lintier",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Setup Eslint & Prettier in Typescript projects.",
   "main": "./bin/index.js",
   "scripts": {
@@ -10,7 +10,9 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix ."
   },
-  "bin": "./bin/index.js",
+  "bin": {
+    "lintier": "./bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Josh-Stillman/ts-eslint-prettier-install.git"
