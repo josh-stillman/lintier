@@ -1,7 +1,7 @@
 {
-  "name": "linting-script",
+  "name": "lintier",
   "version": "1.0.0",
-  "description": "Script to add Eslint & Prettier linting and code formatting in a Typescript project.",
+  "description": "Setup Eslint & Prettier in Typescript projects.",
   "main": "./bin/index.js",
   "scripts": {
     "lint-setup": "node index.js",

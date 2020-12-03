@@ -5,7 +5,7 @@
 
 // TODO:
 // 1. parse options and install accordingly
-// 1. logging about what is being installed (proejct type)
+// 1. logging about what is being installed (proejct type).  spinner?
 // 2. edit eslint accordingly
 // 3. prune unused rules.  (Try out on react projects.  iching)
 // 4. stylelint
@@ -13,6 +13,7 @@
 // 6. clean up and organize code
 // 7. test locally, test on npm/npx.
 // 7. help explaining how it's used.
+// 8. better repo naming.  ts-prettylint? ts-lintier.... just lintier?
 
 // ///////
 
