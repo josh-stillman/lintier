@@ -1,8 +1,8 @@
 // ask questions if no args
 
-const inquirer = require('inquirer');
+import inquirer from 'inquirer';
 
-const question = async () => {
+export const question = async () => {
 
   const questions = [
     {
@@ -18,5 +18,3 @@ const question = async () => {
 
   return answers;
 }
-
-exports.question = question;

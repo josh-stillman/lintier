@@ -1,8 +1,8 @@
 // parse and return args with commander
 
-const { program } = require('commander');
+import { program } from 'commander';
 
-const getArgs = () => {
+export const getArgs = () => {
 
 
 program
@@ -21,8 +21,4 @@ program.parse(process.argv);
 return program;
 
 // console.log(program.opts());
-
-
 }
-
-exports.getArgs = getArgs;

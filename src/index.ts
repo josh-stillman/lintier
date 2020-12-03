@@ -11,23 +11,23 @@
 // 6. add stylelintrc
 // 7. add husky and lint-staged
 
-const fs = require('fs');
-const path = require('path');
-const { exit } = require('process');
-const execa = require('execa');
+import fs from 'fs';
+import path from 'path';
+import { exit } from 'process';
+import execa from 'execa';
 
-const getArgs = require('./parseArgs').getArgs;
-const question = require('./questions').question;
+import { getArgs } from './parseArgs';
+import { question } from './questions';
 
 const getDepList = () => {
   return ['eslint', 'prettier', '@typescript-eslint/eslint-plugin', '@typescript-eslint/parser', 'eslint-config-prettier', 'eslint-plugin-prettier', 'eslint-plugin-react', 'eslint-plugin-react-hooks']
 }
 
-const installDeps = async (useYarn) => {
+const installDeps = async (useYarn?: boolean) => {
     const inst = execa(useYarn ? 'yarn' : 'npm', [useYarn ? 'add' : 'install', ...getDepList(), '-E', '-D']);
     console.log('Installing dependencies...')
-    inst.stdout.pipe(process.stdout);
-    inst.stderr.pipe(process.stderr);
+    inst.stdout?.pipe(process.stdout);
+    inst.stderr?.pipe(process.stderr);
 }
 
 const getEslintRc = () => {
