@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
@@ -125,7 +126,11 @@ const main = async () => {
   oldPackageJson.scripts = {
     // eslint-disable-next-line @typescript-eslint/ban-types
     ...(oldPackageJson.scripts as Object | undefined),
-    ...{ lint: 'hello world', 'lint:fix': 'asdf' },
+    ...{
+      lint: 'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .',
+      'lint:fix':
+        'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix .',
+    },
   };
 
   const newPkg = JSON.stringify(oldPackageJson, null, 2);
