@@ -1,11 +1,11 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// ask questions if no args
 
 import inquirer from 'inquirer';
+import { LintierConfig } from './getConfig';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const question = async () => {
+export const askQuestions = async (): Promise<LintierConfig> => {
   type ProjectType = 'React' | 'Node' | 'Both' | 'Neither';
 
   const projectType = ((await inquirer.prompt([
@@ -23,7 +23,8 @@ export const question = async () => {
       default: true,
     },
   ])) as unknown) as {
-    [key: string]: ProjectType | boolean;
+    projectType: ProjectType;
+    airBnb: boolean;
   };
 
   const styleLint =
@@ -47,7 +48,5 @@ export const question = async () => {
     },
   ]);
 
-  return { ...projectType, ...styleLint, ...husky } as {
-    [key: string]: string | boolean;
-  };
+  return { ...projectType, ...styleLint, ...husky } as LintierConfig;
 };

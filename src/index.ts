@@ -36,12 +36,9 @@ import path from 'path';
 import { exit } from 'process';
 import execa from 'execa';
 
-import { getArgs } from './parseArgs';
-import { question } from './questions';
-
-// make these objects instead.  it's js baby.
 import { baseEslintRc } from './baseEslintRc';
 import { basePrettierRc } from './basePrettierRc';
+import { getConfig } from './getConfig/getConfig';
 
 const getDepList = () => {
   return [
@@ -117,19 +114,15 @@ const main = async () => {
   const useYarn = fs.existsSync(path.join(process.cwd(), 'yarn.lock'));
 
   // 1. get options / ask questions
-  const program = getArgs();
 
-  console.log(program.opts());
+  const config = await getConfig();
+  console.log({ config });
 
-  let answers;
-
-  if (Object.values(program.opts()).every(opt => opt === undefined)) {
-    answers = await question();
+  if (config) {
+    return;
   }
 
-  console.log(answers);
-  console.log('here');
-
+  // extract to function
   const oldPackageJson = require(path.join(
     process.cwd(),
     'package.json'

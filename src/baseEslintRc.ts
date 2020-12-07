@@ -49,5 +49,6 @@ export const baseEslintRc = {
     'node/no-unsupported-features/es-syntax': 'off',
     'node/no-missing-import': 'off',
     'node/shebang': 'off',
+    'no-use-before-define': 'off',
   },
 };

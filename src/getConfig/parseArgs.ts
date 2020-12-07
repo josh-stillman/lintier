@@ -12,5 +12,5 @@ export const getArgs = () => {
   // version etc.
   program.parse(process.argv);
 
-  return program;
+  return program.opts();
 };
