@@ -6,16 +6,16 @@
 /* eslint-disable no-console */
 
 // TODO:
-// 1. parse options and install accordingly
+// X 1. parse options and install accordingly
 // 1. logging about what is being installed (proejct type).  spinner?
-// 2. edit eslint accordingly
-// 3. prune unused rules.  (Try out on react projects.  iching)
+// X 2. edit eslint accordingly
+// X 3. prune unused rules.  (Try out on react projects.  iching)
 // 4. stylelint
 // 5. husky
 // 6. clean up and organize code
 // 7. test locally, test on npm/npx.
-// 7. help explaining how it's used.
-// 8. better repo naming.  ts-prettylint? ts-lintier.... just lintier?
+// 7. help explaining how it's used, version.
+// X 8. better repo naming.  ts-prettylint? ts-lintier.... just lintier?
 
 // ///////
 
@@ -31,16 +31,17 @@
 // 6. add stylelintrc
 // 7. add husky and lint-staged
 
-import fs from 'fs';
+// eslint-disable-next-line node/no-unsupported-features/node-builtins
+import fs, { promises as fsa } from 'fs';
 import path from 'path';
 import { exit } from 'process';
 import execa from 'execa';
 
-import { baseEslintRc } from './baseEslintRc';
+import { getEslintRc } from './getEslintrc';
 import { basePrettierRc } from './basePrettierRc';
 import { getConfig } from './getConfig/getConfig';
 
-const getDepList = () => {
+const getDepList = ({ react, node }: { react: boolean; node: boolean }) => {
   return [
     'eslint',
     'prettier',
@@ -48,16 +49,25 @@ const getDepList = () => {
     '@typescript-eslint/parser',
     'eslint-config-prettier',
     'eslint-plugin-prettier',
-    'eslint-plugin-node',
-    'eslint-plugin-react',
-    'eslint-plugin-react-hooks',
+    ...(node ? ['eslint-plugin-node'] : []),
+    ...(react ? ['eslint-plugin-react', 'eslint-plugin-react-hooks'] : []),
   ];
 };
 
-const installDeps = async (useYarn?: boolean) => {
+const installDeps = async ({
+  useYarn,
+  node,
+  react,
+  airBnb,
+}: {
+  useYarn: boolean;
+  node: boolean;
+  react: boolean;
+  airBnb?: boolean;
+}) => {
   const inst = execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
-    ...getDepList(),
+    ...getDepList({ node, react }),
     '-E',
     '-D',
   ]);
@@ -66,17 +76,16 @@ const installDeps = async (useYarn?: boolean) => {
   inst.stdout?.pipe(process.stdout);
   // eslint-disable-next-line no-unused-expressions
   inst.stderr?.pipe(process.stderr);
+
+  if (airBnb) {
+    await installAirBnb({ useYarn, react });
+  }
 };
 
-const getEslintRc = () => {
-  return JSON.stringify(baseEslintRc, null, 2);
-};
-
-const getPrettierRc = () => {
-  return JSON.stringify(basePrettierRc, null, 2);
-};
-
-const installAirBnb = async (react = true, useYarn?: boolean) => {
+const installAirBnb = async ({
+  react = true,
+  useYarn = false,
+}: { react?: boolean; useYarn?: boolean } = {}) => {
   const inst = execa('npx', [
     'install-peerdeps',
     `-D${useYarn ? 'Y' : ''}`,
@@ -92,8 +101,47 @@ const installAirBnb = async (react = true, useYarn?: boolean) => {
   inst.stderr?.pipe(process.stderr);
 };
 
+const updatePackageJson = async () => {
+  const oldPackageJson = require(path.join(
+    process.cwd(),
+    'package.json'
+  )) as Record<string, unknown>;
+
+  oldPackageJson.scripts = {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    ...(oldPackageJson.scripts as Object | undefined),
+    ...{
+      lint: 'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .',
+      'lint:fix':
+        'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix .',
+    },
+  };
+
+  const newPkg = JSON.stringify(oldPackageJson, null, 2);
+
+  // fs.writeFileSync(path.join(process.cwd(), 'package.json'), newPkg);
+  return fsa.writeFile(path.join(process.cwd(), 'package.json'), newPkg);
+};
+
+const writePrettierRc = async () =>
+  fsa.writeFile(
+    path.join(process.cwd(), '.prettierrc'),
+    JSON.stringify(basePrettierRc, null, 2)
+  );
+
+const writeEslintRc = async ({
+  node,
+  react,
+}: {
+  node: boolean;
+  react: boolean;
+}) =>
+  fsa.writeFile(
+    path.join(process.cwd(), '.eslintrc'),
+    JSON.stringify(getEslintRc({ node, react }), null, 2)
+  );
+
 const main = async () => {
-  // 0. guarding on proper dir and has git
   const hasPackageJson = fs.existsSync(
     path.join(process.cwd(), 'package.json')
   );
@@ -113,50 +161,23 @@ const main = async () => {
   // 0.A.; setup
   const useYarn = fs.existsSync(path.join(process.cwd(), 'yarn.lock'));
 
-  // 1. get options / ask questions
-
   const config = await getConfig();
-  console.log({ config });
 
-  if (config) {
-    return;
-  }
+  await installDeps({
+    useYarn,
+    react: config.projectType === 'React' || config.projectType === 'Both',
+    node: config.projectType === 'Node' || config.projectType === 'Both',
+    airBnb: config.airBnb,
+  });
 
-  // extract to function
-  const oldPackageJson = require(path.join(
-    process.cwd(),
-    'package.json'
-  )) as Record<string, unknown>;
+  await writePrettierRc();
 
-  // const obj = JSON.parse(oldPackageJson, JSON.stringify(oldPackageJson));
-  // console.log('package json is', oldPackageJson)
+  await writeEslintRc({
+    react: config.projectType === 'React' || config.projectType === 'Both',
+    node: config.projectType === 'Node' || config.projectType === 'Both',
+  });
 
-  oldPackageJson.scripts = {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    ...(oldPackageJson.scripts as Object | undefined),
-    ...{
-      lint: 'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .',
-      'lint:fix':
-        'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix .',
-    },
-  };
-
-  const newPkg = JSON.stringify(oldPackageJson, null, 2);
-  console.log('new process json', newPkg);
-  console.log('has pkg json in dir', hasPackageJson);
-  console.log('has git in dir', hasGit);
-  console.log('use yarn', useYarn);
-
-  fs.writeFileSync(path.join(process.cwd(), 'package.json'), newPkg);
-
-  const eslintRc = getEslintRc();
-  fs.writeFileSync(path.join(process.cwd(), '.eslintrc'), eslintRc);
-
-  const prettierRc = getPrettierRc();
-  fs.writeFileSync(path.join(process.cwd(), '.prettierrc'), prettierRc);
-
-  await installDeps(useYarn);
-  await installAirBnb();
+  await updatePackageJson();
 };
 
 main().catch(err => console.error(err));
