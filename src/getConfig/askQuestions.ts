@@ -18,7 +18,7 @@ export const askQuestions = async (): Promise<LintierConfig> => {
     },
     {
       type: 'confirm',
-      name: 'airbnb',
+      name: 'airBnb',
       message: 'Install AirBnb Style Guide Config?',
       default: true,
     },
