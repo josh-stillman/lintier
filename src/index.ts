@@ -24,7 +24,6 @@ import path from 'path';
 import { exit } from 'process';
 import execa from 'execa';
 
-import { settings } from 'cluster';
 import { getEslintRc } from './getEslintrc';
 import { basePrettierRc } from './basePrettierRc';
 import { getConfig } from './getConfig/getConfig';
