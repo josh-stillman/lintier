@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rimraf ./bin && tsc",
     "start": "npm run build && node bin/index.js",
+    "restart": "node bin/index.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix ."
   },
