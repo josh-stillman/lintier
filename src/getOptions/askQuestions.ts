@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import inquirer from 'inquirer';
-import { LintierConfig } from './getConfig';
+import { LintierConfig } from './getOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const askQuestions = async (): Promise<LintierConfig> => {
