@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import execa from 'execa';
+import ora from 'ora';
 
 export const installDeps = async ({
   useYarn,
@@ -12,7 +13,7 @@ export const installDeps = async ({
   react: boolean;
   airBnb: boolean;
 }) => {
-  console.log('Installing dependencies...');
+  const spinner = ora('Installing dependencies...').start();
 
   const inst = await execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
@@ -22,6 +23,8 @@ export const installDeps = async ({
   ]);
 
   console.log(inst.stdout, inst.stderr);
+
+  spinner.succeed();
 
   if (airBnb) {
     await installAirBnb({ useYarn, react });
@@ -48,7 +51,7 @@ const installAirBnb = async ({
   react: boolean;
   useYarn: boolean;
 }) => {
-  console.log('Installing airbnb...');
+  const spinner = ora('Installing airbnb...').start();
 
   const inst = await execa('npx', [
     'install-peerdeps',
@@ -59,4 +62,6 @@ const installAirBnb = async ({
   ]);
 
   console.log(inst.stdout, inst.stderr);
+
+  spinner.succeed();
 };

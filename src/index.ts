@@ -8,17 +8,20 @@
 // X 2. edit eslint accordingly
 // X 3. prune unused rules.  (Try out on react projects.  iching)
 // X 8. better repo naming.  ts-prettylint? ts-lintier.... just lintier?
+// X 6. spinners / new lines after logs
 
 // 4. stylelint
 // 5. husky
-// 6. spinners / new lines after logs
-// 6. clean up and organize code
+// 6. clean up and organize code (alter config obj)
 // 7. help explaining how it's used, version.
 // 7. test locally, test on npm/npx.
+// 8. tests?
 
 import fs from 'fs';
 import path from 'path';
 import { exit } from 'process';
+
+import ora from 'ora';
 
 import { getConfig } from './getOptions/getOptions';
 import { installDeps } from './installDependencies/installDependencies';
@@ -32,20 +35,19 @@ const main = async () => {
   const hasPackageJson = fs.existsSync(
     path.join(process.cwd(), 'package.json')
   );
-  const hasGit = fs.existsSync(path.join(process.cwd(), '.git/'));
 
   if (!hasPackageJson) {
     console.log('Missing package.json in directory.  Exiting');
     exit(1);
   }
 
+  const hasGit = fs.existsSync(path.join(process.cwd(), '.git/'));
   if (!hasGit) {
     console.log('No git detected.');
     // prompt for continue?
     exit(1);
   }
 
-  // 0.A.; setup
   const useYarn = fs.existsSync(path.join(process.cwd(), 'yarn.lock'));
 
   const config = await getConfig();
@@ -59,37 +61,38 @@ const main = async () => {
     airBnb: !!config.airBnb,
   });
 
-  console.log('Writing .prettierrc...');
+  const eslintSpinner = ora('Writing .prettierrc...').start();
+
   await writePrettierRc();
 
-  console.log('Writing .eslintrc...');
+  const prettierSpinner = eslintSpinner.succeed().start('Writing .eslintrc...');
+
   await writeEslintRc({
     react: config.projectType === 'React' || config.projectType === 'Both',
     node: config.projectType === 'Node' || config.projectType === 'Both',
   });
 
-  console.log('Updating package.json with lint scripts...');
+
+  const packageSpinner = prettierSpinner.succeed().start('Updating package.json with lint scripts...');
+
   await updatePackageJson();
 
-  printSuccessMessage();
+  packageSpinner.succeed().stopAndPersist({text: successMessage, symbol: '🎉'});
 };
 
-const printSuccessMessage = () => {
-  console.log(
-    `Successfully installed eslint + prettier.
 
-    Next steps:
-    1. Edit .rc files to your liking.
-    2. Add eslint (and stylelint) VS Code plugins.
-    3. Edit your VS Code settings.json to enable auto-format on save:
+const successMessage = `Successfully installed eslint + prettier.
 
-      "editor.codeActionsOnSave": {
-        "source.fixAll": true
-      }"
+Next steps:
+1. Edit .rc files to your liking.
+2. Add eslint (and stylelint) VS Code plugins.
+3. Edit your VS Code settings.json to enable auto-format on save:
 
-    Lintier out ✌️
-    `
-  );
-};
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }"
+
+Lintier out ✌️
+`;
 
 main().catch(err => console.error(err));
