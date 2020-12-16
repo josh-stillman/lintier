@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import execa from 'execa';
-import ora from 'ora';
+import ora, { Ora } from 'ora';
 
 export const installDeps = async ({
   useYarn,
@@ -22,13 +22,17 @@ export const installDeps = async ({
     '-D',
   ]);
 
+  spinner.stopAndPersist();
+
   console.log(inst.stdout, inst.stderr);
 
-  spinner.succeed();
-
   if (airBnb) {
-    await installAirBnb({ useYarn, react });
+    await installAirBnb({ useYarn, react, depsSpinner: spinner });
+
+    return;
   }
+
+  spinner.succeed();
 };
 
 const getDepList = ({ react, node }: { react: boolean; node: boolean }) => {
@@ -47,11 +51,13 @@ const getDepList = ({ react, node }: { react: boolean; node: boolean }) => {
 const installAirBnb = async ({
   react,
   useYarn,
+  depsSpinner,
 }: {
   react: boolean;
   useYarn: boolean;
+  depsSpinner: Ora;
 }) => {
-  const spinner = ora('Installing airbnb...').start();
+  const airbnbSpinner = ora('Installing airbnb...').start();
 
   const inst = await execa('npx', [
     'install-peerdeps',
@@ -61,7 +67,11 @@ const installAirBnb = async ({
     react ? 'eslint-config-airbnb' : 'eslint-config-airbnb-base',
   ]);
 
+  airbnbSpinner.stopAndPersist();
+
   console.log(inst.stdout, inst.stderr);
 
-  spinner.succeed();
+  depsSpinner.succeed();
+
+  airbnbSpinner.succeed();
 };
