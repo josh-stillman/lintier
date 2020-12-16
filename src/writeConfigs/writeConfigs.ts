@@ -34,10 +34,12 @@ export const writePrettierRc = async () =>
 export const writeEslintRc = async ({
   node,
   react,
+  airbnb,
 }: {
   node: boolean;
   react: boolean;
-}) => writeLocalFile('.eslintrc', getEslintRc({ node, react }));
+  airbnb: boolean;
+}) => writeLocalFile('.eslintrc', getEslintRc({ node, react, airbnb }));
 
 const writeLocalFile = async (
   fileName: string,

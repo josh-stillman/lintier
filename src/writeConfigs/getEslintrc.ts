@@ -1,11 +1,13 @@
 export const getEslintRc = ({
   node,
   react,
+  airbnb,
 }: {
   node: boolean;
   react: boolean;
+  airbnb: boolean;
 }) => ({
-  extends: getExtends({ react, node }),
+  extends: getExtends({ react, node, airbnb }),
   env: getEnv({ react, node }),
   parser: '@typescript-eslint/parser',
   parserOptions: getParserOptions(react),
@@ -14,8 +16,16 @@ export const getEslintRc = ({
   rules: getRules({ node, react }),
 });
 
-const getExtends = ({ react, node }: { react: boolean; node: boolean }) => [
-  'airbnb',
+const getExtends = ({
+  react,
+  node,
+  airbnb,
+}: {
+  react: boolean;
+  node: boolean;
+  airbnb: boolean;
+}) => [
+  ...(airbnb ? [`airbnb${react ? '' : '-base'}`] : []),
   'eslint:recommended',
   ...(node ? ['plugin:node/recommended'] : []),
   ...(react ? ['plugin:react/recommended'] : []),

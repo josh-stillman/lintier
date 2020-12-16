@@ -70,16 +70,19 @@ const main = async () => {
   await writeEslintRc({
     react: config.projectType === 'React' || config.projectType === 'Both',
     node: config.projectType === 'Node' || config.projectType === 'Both',
+    airbnb: !!config.airBnb,
   });
 
-
-  const packageSpinner = prettierSpinner.succeed().start('Updating package.json with lint scripts...');
+  const packageSpinner = prettierSpinner
+    .succeed()
+    .start('Updating package.json with lint scripts...');
 
   await updatePackageJson();
 
-  packageSpinner.succeed().stopAndPersist({text: successMessage, symbol: '🎉'});
+  packageSpinner
+    .succeed()
+    .stopAndPersist({ text: successMessage, symbol: '🎉' });
 };
-
 
 const successMessage = `Successfully installed eslint + prettier.
 
