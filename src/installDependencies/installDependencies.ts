@@ -7,17 +7,19 @@ export const installDeps = async ({
   node,
   react,
   airBnb,
+  styleLint,
 }: {
   useYarn: boolean;
   node: boolean;
   react: boolean;
   airBnb: boolean;
+  styleLint: boolean;
 }) => {
   const spinner = ora('Installing dependencies...').start();
 
   const inst = await execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
-    ...getDepList({ node, react }),
+    ...getDepList({ node, react, styleLint }),
     '-E',
     '-D',
   ]);
@@ -35,7 +37,15 @@ export const installDeps = async ({
   spinner.succeed();
 };
 
-const getDepList = ({ react, node }: { react: boolean; node: boolean }) => {
+const getDepList = ({
+  react,
+  node,
+  styleLint,
+}: {
+  react: boolean;
+  node: boolean;
+  styleLint: boolean;
+}) => {
   return [
     'eslint',
     'prettier',
@@ -45,6 +55,14 @@ const getDepList = ({ react, node }: { react: boolean; node: boolean }) => {
     'eslint-plugin-prettier',
     ...(node ? ['eslint-plugin-node'] : []),
     ...(react ? ['eslint-plugin-react', 'eslint-plugin-react-hooks'] : []),
+    ...(styleLint
+      ? [
+          'stylelint',
+          'stylelint-config-prettier',
+          'stylelint-prettier',
+          'stylelint-config-standard',
+        ]
+      : []),
   ];
 };
 

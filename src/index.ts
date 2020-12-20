@@ -14,7 +14,7 @@
 // 5. husky
 // 6. clean up and organize code (alter config obj)
 // 7. help explaining how it's used, version.
-// 7. test locally, test on npm/npx.
+// 7. test locally, test CRA, test on npm/npx.
 // 8. tests?
 
 import fs from 'fs';
@@ -29,6 +29,7 @@ import {
   updatePackageJson,
   writeEslintRc,
   writePrettierRc,
+  writeStylelintRc,
 } from './writeConfigs/writeConfigs';
 
 const main = async () => {
@@ -59,12 +60,14 @@ const main = async () => {
     react: config.projectType === 'React' || config.projectType === 'Both',
     node: config.projectType === 'Node' || config.projectType === 'Both',
     airBnb: !!config.airBnb,
+    styleLint: !!config.styleLint,
   });
 
   const eslintSpinner = ora('Writing .prettierrc...').start();
 
   await writePrettierRc();
 
+  // TODO: move spinners into methods?
   const prettierSpinner = eslintSpinner.succeed().start('Writing .eslintrc...');
 
   await writeEslintRc({
@@ -73,22 +76,37 @@ const main = async () => {
     airbnb: !!config.airBnb,
   });
 
-  const packageSpinner = prettierSpinner
-    .succeed()
-    .start('Updating package.json with lint scripts...');
+  prettierSpinner.succeed();
 
-  await updatePackageJson();
+  if (config.styleLint) {
+    const stylelintSpinner = ora('Writing .stylelintrc...').start();
+
+    await writeStylelintRc();
+
+    stylelintSpinner.succeed();
+  }
+
+  const packageSpinner = ora(
+    'Updating package.json with lint scripts...'
+  ).start();
+
+  await updatePackageJson({
+    styleLint: !!config.styleLint,
+    husky: !!config.husky,
+  });
 
   packageSpinner
     .succeed()
-    .stopAndPersist({ text: successMessage, symbol: '🎉' });
+    .stopAndPersist({ text: successMessage(!!config.styleLint), symbol: '🎉' });
 };
 
-const successMessage = `Successfully installed eslint + prettier.
+const successMessage = (styleLint: boolean) => `Successfully installed eslint${
+  styleLint ? ' & stylelint' : ''
+} & prettier.
 
 Next steps:
 1. Edit .rc files to your liking.
-2. Add eslint (and stylelint) VS Code plugins.
+2. Add eslint${styleLint ? ' & stylelint' : ''} VS Code plugins.
 3. Edit your VS Code settings.json to enable auto-format on save:
 
   "editor.codeActionsOnSave": {

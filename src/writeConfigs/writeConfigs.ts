@@ -7,21 +7,36 @@
 import { promises as fsa } from 'fs';
 import path from 'path';
 import { basePrettierRc } from './basePrettierRc';
+import { baseStylelintRc } from './baseStylelintRc';
 import { getEslintRc } from './getEslintrc';
 
-export const updatePackageJson = async () => {
+export const updatePackageJson = async ({
+  styleLint,
+  husky,
+}: {
+  styleLint: boolean;
+  husky: boolean;
+}) => {
   const oldPackageJson = require(path.join(
     process.cwd(),
     'package.json'
   )) as Record<string, unknown>;
 
+  console.log({ husky });
+
+  const eslintScript =
+    'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .';
+
+  const stylelintScript = 'stylelint --ignore-path .gitignore .';
+
   oldPackageJson.scripts = {
     // eslint-disable-next-line @typescript-eslint/ban-types
     ...(oldPackageJson.scripts as Object | undefined),
     ...{
-      lint: 'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .',
-      'lint:fix':
-        'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix .',
+      lint: `${eslintScript}${styleLint ? ` && ${stylelintScript}` : ''}`,
+      'lint:fix': `${eslintScript} --fix${
+        styleLint ? ` && ${stylelintScript} --fix` : ''
+      }`,
     },
   };
 
@@ -30,6 +45,9 @@ export const updatePackageJson = async () => {
 
 export const writePrettierRc = async () =>
   writeLocalFile('.prettierrc', basePrettierRc);
+
+export const writeStylelintRc = async () =>
+  writeLocalFile('.stylelintrc', baseStylelintRc);
 
 export const writeEslintRc = async ({
   node,
