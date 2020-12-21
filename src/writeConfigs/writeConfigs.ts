@@ -27,7 +27,8 @@ export const updatePackageJson = async ({
   const eslintScript =
     'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .';
 
-  const stylelintScript = 'stylelint --ignore-path .gitignore .';
+  const stylelintScript =
+    'stylelint --ignore-path .gitignore "**/*.{css,scss,sass}"';
 
   oldPackageJson.scripts = {
     // eslint-disable-next-line @typescript-eslint/ban-types
