@@ -1,13 +1,13 @@
 export const getEslintRc = ({
   node,
   react,
-  airbnb,
+  airBnb,
 }: {
   node: boolean;
   react: boolean;
-  airbnb: boolean;
+  airBnb: boolean;
 }) => ({
-  extends: getExtends({ react, node, airbnb }),
+  extends: getExtends({ react, node, airBnb }),
   env: getEnv({ react, node }),
   parser: '@typescript-eslint/parser',
   parserOptions: getParserOptions(react),
@@ -19,13 +19,13 @@ export const getEslintRc = ({
 const getExtends = ({
   react,
   node,
-  airbnb,
+  airBnb,
 }: {
   react: boolean;
   node: boolean;
-  airbnb: boolean;
+  airBnb: boolean;
 }) => [
-  ...(airbnb ? [`airbnb${react ? '' : '-base'}`] : []),
+  ...(airBnb ? [`airbnb${react ? '' : '-base'}`] : []),
   'eslint:recommended',
   ...(node ? ['plugin:node/recommended'] : []),
   ...(react ? ['plugin:react/recommended'] : []),
@@ -94,6 +94,7 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
 
   const reactRules = react
     ? {
+        'react/require-default-props': 'off',
         'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
         'react/state-in-constructor': 'off',
       }

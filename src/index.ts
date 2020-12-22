@@ -9,10 +9,11 @@
 // X 3. prune unused rules.  (Try out on react projects.  iching)
 // X 8. better repo naming.  ts-prettylint? ts-lintier.... just lintier?
 // X 6. spinners / new lines after logs
-
 // 4. stylelint
-// 5. husky
 // 6. clean up and organize code (alter config obj)
+
+// 7. new lines before spinner output.
+// 5. husky
 // 7. help explaining how it's used, version.
 // 7. test locally, test CRA, test on npm/npx.
 // 8. tests?
@@ -51,16 +52,33 @@ const main = async () => {
 
   const useYarn = fs.existsSync(path.join(process.cwd(), 'yarn.lock'));
 
-  const config = await getConfig();
-  console.log({ config });
+  const {
+    react,
+    node,
+    airBnb,
+    styleLint,
+    styledComponents,
+    sass,
+    husky,
+  } = await getConfig();
+
+  console.log({
+    react,
+    node,
+    airBnb,
+    styleLint,
+    styledComponents,
+    sass,
+    husky,
+  });
 
   await installDeps({
     useYarn,
-    // TODO update this.
-    react: config.projectType === 'React' || config.projectType === 'Both',
-    node: config.projectType === 'Node' || config.projectType === 'Both',
-    airBnb: !!config.airBnb,
-    styleLint: !!config.styleLint,
+    react,
+    node,
+    airBnb,
+    styleLint,
+    sass,
   });
 
   const eslintSpinner = ora('Writing .prettierrc...').start();
@@ -71,17 +89,17 @@ const main = async () => {
   const prettierSpinner = eslintSpinner.succeed().start('Writing .eslintrc...');
 
   await writeEslintRc({
-    react: config.projectType === 'React' || config.projectType === 'Both',
-    node: config.projectType === 'Node' || config.projectType === 'Both',
-    airbnb: !!config.airBnb,
+    react,
+    node,
+    airBnb,
   });
 
   prettierSpinner.succeed();
 
-  if (config.styleLint) {
+  if (styleLint) {
     const stylelintSpinner = ora('Writing .stylelintrc...').start();
 
-    await writeStylelintRc();
+    await writeStylelintRc({ sass });
 
     stylelintSpinner.succeed();
   }
@@ -91,22 +109,25 @@ const main = async () => {
   ).start();
 
   await updatePackageJson({
-    styleLint: !!config.styleLint,
-    husky: !!config.husky,
+    styleLint,
+    // husky,
+    sass,
+    styledComponents,
   });
 
   packageSpinner
     .succeed()
-    .stopAndPersist({ text: successMessage(!!config.styleLint), symbol: '🎉' });
+    .stopAndPersist({ text: successMessage(styleLint), symbol: '🎉' });
 };
 
+// link to vs code extensions?
 const successMessage = (styleLint: boolean) => `Successfully installed eslint${
   styleLint ? ' & stylelint' : ''
 } & prettier.
 
 Next steps:
 1. Edit .rc files to your liking.
-2. Add eslint${styleLint ? ' & stylelint' : ''} VS Code plugins.
+2. Install eslint${styleLint ? ' & stylelint' : ''} VS Code plugins.
 3. Edit your VS Code settings.json to enable auto-format on save:
 
   "editor.codeActionsOnSave": {

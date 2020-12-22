@@ -6,29 +6,33 @@
 
 import { promises as fsa } from 'fs';
 import path from 'path';
+
 import { basePrettierRc } from './basePrettierRc';
-import { baseStylelintRc } from './baseStylelintRc';
+import { getBaseStylelintRc } from './baseStylelintRc';
 import { getEslintRc } from './getEslintrc';
 
 export const updatePackageJson = async ({
   styleLint,
-  husky,
+  // husky,
+  styledComponents,
+  sass,
 }: {
   styleLint: boolean;
-  husky: boolean;
+  styledComponents: boolean;
+  sass: boolean;
+  // husky: boolean;
 }) => {
   const oldPackageJson = require(path.join(
     process.cwd(),
     'package.json'
   )) as Record<string, unknown>;
 
-  console.log({ husky });
-
   const eslintScript =
     'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .';
 
-  const stylelintScript =
-    'stylelint --ignore-path .gitignore "**/*.{css,scss,sass}"';
+  const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css${
+    sass ? ',scss,sass' : ''
+  }${styledComponents ? ',js,ts,jsx,tsx' : ''}}'`;
 
   oldPackageJson.scripts = {
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -47,18 +51,18 @@ export const updatePackageJson = async ({
 export const writePrettierRc = async () =>
   writeLocalFile('.prettierrc', basePrettierRc);
 
-export const writeStylelintRc = async () =>
-  writeLocalFile('.stylelintrc', baseStylelintRc);
+export const writeStylelintRc = async ({ sass }: { sass: boolean }) =>
+  writeLocalFile('.stylelintrc', getBaseStylelintRc({ sass }));
 
 export const writeEslintRc = async ({
   node,
   react,
-  airbnb,
+  airBnb,
 }: {
   node: boolean;
   react: boolean;
-  airbnb: boolean;
-}) => writeLocalFile('.eslintrc', getEslintRc({ node, react, airbnb }));
+  airBnb: boolean;
+}) => writeLocalFile('.eslintrc', getEslintRc({ node, react, airBnb }));
 
 const writeLocalFile = async (
   fileName: string,

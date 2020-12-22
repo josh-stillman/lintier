@@ -2,46 +2,61 @@
 import { askQuestions } from './askQuestions';
 import { getArgs } from './parseArgs';
 
-export interface CommandLineOptions {
-  react: boolean | undefined;
-  node: boolean | undefined;
-  styleLint: boolean | undefined;
-  airBnb: boolean | undefined;
-  husky: boolean | undefined;
+export interface LintierConfig {
+  [key: string]: boolean;
+  react: boolean;
+  node: boolean;
+  styleLint: boolean;
+  styledComponents: boolean;
+  sass: boolean;
+  airBnb: boolean;
+  husky: boolean;
 }
 
-export interface LintierConfig {
-  projectType: 'React' | 'Node' | 'Both' | 'Neither';
-  styleLint: boolean | undefined;
-  airBnb: boolean | undefined;
-  husky: boolean | undefined;
+export type CommandLineOptions = Partial<LintierConfig>;
+
+export type ProjectType = 'React' | 'Node' | 'Both' | 'Neither';
+export type StyleType = 'Styled Components' | 'Sass' | 'Both' | 'Neither';
+
+export interface ConfigAnswers {
+  projectType: ProjectType;
+  styleLint: boolean;
+  styleType: StyleType;
+  airBnb: boolean;
+  husky: boolean;
 }
 
 export const getConfig = async () => {
   const clArgs = getArgs() as CommandLineOptions;
 
   if (Object.values(clArgs).every(opt => opt === undefined)) {
-    return askQuestions();
+    const answers = await askQuestions();
+    return transformAnswers(answers);
   }
 
   return transformClArgs(clArgs);
 };
 
-export const transformClArgs = (clArgs: CommandLineOptions): LintierConfig => {
-  const { react, node, styleLint, husky, airBnb } = clArgs;
-
-  let projectType: LintierConfig['projectType'];
-
-  if (react) {
-    projectType = node ? 'Both' : 'React';
-  } else {
-    projectType = node ? 'Node' : 'Neither';
-  }
+export const transformAnswers = (answers: ConfigAnswers): LintierConfig => {
+  const { projectType, styleLint, styleType, airBnb, husky } = answers;
 
   return {
-    projectType,
-    airBnb,
+    react: projectType === 'React' || projectType === 'Both',
+    node: projectType === 'Node' || projectType === 'Both',
     styleLint,
+    styledComponents: styleType === 'Styled Components' || styleType === 'Both',
+    sass: styleType === 'Sass' || styleType === 'Both',
+    airBnb,
     husky,
   };
+};
+
+export const transformClArgs = (clArgs: CommandLineOptions): LintierConfig => {
+  const transformedClArgs: CommandLineOptions = { ...clArgs };
+
+  Object.keys(transformedClArgs).forEach(k => {
+    transformedClArgs[k] = !!transformedClArgs[k];
+  });
+
+  return transformedClArgs as LintierConfig;
 };

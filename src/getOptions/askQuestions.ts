@@ -2,12 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import inquirer from 'inquirer';
-import { LintierConfig } from './getOptions';
+import { ConfigAnswers, ProjectType, StyleType } from './getOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const askQuestions = async (): Promise<LintierConfig> => {
-  type ProjectType = 'React' | 'Node' | 'Both' | 'Neither';
-
+export const askQuestions = async (): Promise<ConfigAnswers> => {
   const projectType = ((await inquirer.prompt([
     {
       type: 'list',
@@ -29,24 +27,41 @@ export const askQuestions = async (): Promise<LintierConfig> => {
 
   const styleLint =
     projectType.projectType === 'React' || projectType.projectType === 'Both'
-      ? await inquirer.prompt([
+      ? (((await inquirer.prompt([
           {
             type: 'confirm',
             name: 'styleLint',
             message: 'Install StyleLint?',
             default: true,
           },
-        ])
+        ])) as unknown) as { styleLint: boolean })
       : { styleLint: false };
 
-  const husky = await inquirer.prompt([
+  const styleType = styleLint.styleLint
+    ? (((await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'styleType',
+          message: 'Install which plugins?',
+          choices: ['Styled Components', 'Sass', 'Both', 'Neither'],
+          default: 'Styled Components',
+        },
+      ])) as unknown) as { styleType: StyleType })
+    : { styleType: 'Neither' };
+
+  const husky = ((await inquirer.prompt([
     {
       type: 'confirm',
       name: 'husky',
       message: 'Install Husky and Lint-Staged?',
       default: 'React',
     },
-  ]);
+  ])) as unknown) as { husky: boolean };
 
-  return { ...projectType, ...styleLint, ...husky } as LintierConfig;
+  return {
+    ...projectType,
+    ...styleLint,
+    ...husky,
+    ...styleType,
+  } as ConfigAnswers;
 };
