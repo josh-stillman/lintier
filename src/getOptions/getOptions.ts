@@ -16,7 +16,11 @@ export interface LintierConfig {
 export type CommandLineOptions = Partial<LintierConfig>;
 
 export type ProjectType = 'React' | 'Node' | 'Both' | 'Neither';
-export type StyleType = 'Styled Components' | 'Sass' | 'Both' | 'Neither';
+export type StyleType =
+  | 'Styled Components  / css-in-js'
+  | 'Sass'
+  | 'Both'
+  | 'Neither';
 
 export interface ConfigAnswers {
   projectType: ProjectType;
@@ -27,7 +31,8 @@ export interface ConfigAnswers {
 }
 
 export const getConfig = async () => {
-  const clArgs = getArgs() as CommandLineOptions;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { version, ...clArgs } = getArgs() as CommandLineOptions;
 
   if (Object.values(clArgs).every(opt => opt === undefined)) {
     const answers = await askQuestions();
@@ -44,7 +49,8 @@ export const transformAnswers = (answers: ConfigAnswers): LintierConfig => {
     react: projectType === 'React' || projectType === 'Both',
     node: projectType === 'Node' || projectType === 'Both',
     styleLint,
-    styledComponents: styleType === 'Styled Components' || styleType === 'Both',
+    styledComponents:
+      styleType === 'Styled Components  / css-in-js' || styleType === 'Both',
     sass: styleType === 'Sass' || styleType === 'Both',
     airBnb,
     husky,

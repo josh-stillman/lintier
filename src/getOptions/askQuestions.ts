@@ -42,9 +42,9 @@ export const askQuestions = async (): Promise<ConfigAnswers> => {
         {
           type: 'list',
           name: 'styleType',
-          message: 'Install which plugins?',
-          choices: ['Styled Components', 'Sass', 'Both', 'Neither'],
-          default: 'Styled Components',
+          message: 'Which styling tools does the project use?',
+          choices: ['Styled Components / css-in-js', 'Sass', 'Both', 'Neither'],
+          default: 'Styled Components / css-in-js',
         },
       ])) as unknown) as { styleType: StyleType })
     : { styleType: 'Neither' };
