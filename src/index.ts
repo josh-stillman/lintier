@@ -11,12 +11,12 @@
 // X 6. spinners / new lines after logs
 // X 4. stylelint
 // X 6. clean up and organize code (alter config obj)
-
 // X 7. new lines before spinner output.
-// 7. help explaining how it's used, version.
+
+// 7. help explaining how it's used, version, readme.
 // 5. husky
-// 7. test locally, test on npm/npx.
 // 8. tests?
+// 7. test locally, test on npm/npx.
 
 import fs from 'fs';
 import path from 'path';
@@ -72,7 +72,7 @@ const main = async () => {
     husky,
   });
 
-  console.log('\n');
+  console.log();
 
   await installDeps({
     useYarn,

@@ -29,7 +29,7 @@ export const installDeps = async ({
   spinner.stopAndPersist();
 
   console.log(inst.stdout, inst.stderr);
-  console.log('\n');
+  console.log();
 
   if (airBnb) {
     await installAirBnb({ useYarn, react, depsSpinner: spinner });
@@ -95,7 +95,7 @@ const installAirBnb = async ({
 
   console.log(inst.stdout, inst.stderr);
 
-  console.log('\n');
+  console.log();
 
   depsSpinner.succeed();
 
