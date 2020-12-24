@@ -29,6 +29,7 @@ export const installDeps = async ({
   spinner.stopAndPersist();
 
   console.log(inst.stdout, inst.stderr);
+  console.log('\n');
 
   if (airBnb) {
     await installAirBnb({ useYarn, react, depsSpinner: spinner });
@@ -80,7 +81,7 @@ const installAirBnb = async ({
   useYarn: boolean;
   depsSpinner: Ora;
 }) => {
-  const airbnbSpinner = ora('Installing airbnb...').start();
+  const airBnbSpinner = ora('Installing airbnb...').start();
 
   const inst = await execa('npx', [
     'install-peerdeps',
@@ -90,11 +91,13 @@ const installAirBnb = async ({
     react ? 'eslint-config-airbnb' : 'eslint-config-airbnb-base',
   ]);
 
-  airbnbSpinner.stopAndPersist();
+  airBnbSpinner.stopAndPersist();
 
   console.log(inst.stdout, inst.stderr);
 
+  console.log('\n');
+
   depsSpinner.succeed();
 
-  airbnbSpinner.succeed();
+  airBnbSpinner.succeed();
 };

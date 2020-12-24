@@ -9,13 +9,13 @@
 // X 3. prune unused rules.  (Try out on react projects.  iching)
 // X 8. better repo naming.  ts-prettylint? ts-lintier.... just lintier?
 // X 6. spinners / new lines after logs
-// 4. stylelint
-// 6. clean up and organize code (alter config obj)
+// X 4. stylelint
+// X 6. clean up and organize code (alter config obj)
 
-// 7. new lines before spinner output.
-// 5. husky
+// X 7. new lines before spinner output.
 // 7. help explaining how it's used, version.
-// 7. test locally, test CRA, test on npm/npx.
+// 5. husky
+// 7. test locally, test on npm/npx.
 // 8. tests?
 
 import fs from 'fs';
@@ -71,6 +71,8 @@ const main = async () => {
     sass,
     husky,
   });
+
+  console.log('\n');
 
   await installDeps({
     useYarn,
