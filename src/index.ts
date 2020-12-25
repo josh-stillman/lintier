@@ -12,11 +12,14 @@
 // X 4. stylelint
 // X 6. clean up and organize code (alter config obj)
 // X 7. new lines before spinner output.
+// X 7. help explaining how it's used, version,
+// X 7. readme.
 
-// 7. help explaining how it's used, version, readme.
 // 5. husky
 // 8. tests?
-// 7. test locally, test on npm/npx.
+// 9. get rid of console log for options
+// 10. add question about proceeding without git?
+// 7. test on npx.
 
 import fs from 'fs';
 import path from 'path';
