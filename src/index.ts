@@ -15,8 +15,9 @@
 // X 7. help explaining how it's used, version,
 // X 7. readme.
 
-// 5. husky
 // 8. tests?
+// 8. write separate eslint ts.config for project?
+// 5. husky
 // 9. get rid of console log for options
 // 10. add question about proceeding without git?
 // 7. test on npx.

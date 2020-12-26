@@ -40,7 +40,7 @@ export const installDeps = async ({
   spinner.succeed();
 };
 
-const getDepList = ({
+export const getDepList = ({
   react,
   node,
   styleLint,
