@@ -8,7 +8,8 @@
     "start": "npm run build && node bin/index.js",
     "restart": "node bin/index.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix ."
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix .",
+    "test": "jest"
   },
   "bin": {
     "lintier": "./bin/index.js"
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@types/commander": "2.12.2",
     "@types/inquirer": "7.3.1",
+    "@types/jest": "26.0.19",
     "@types/node": "14.14.10",
     "@typescript-eslint/eslint-plugin": "4.9.0",
     "@typescript-eslint/parser": "4.9.0",
@@ -42,8 +44,10 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "3.1.4",
+    "jest": "26.6.3",
     "prettier": "2.2.1",
     "rimraf": "3.0.2",
+    "ts-jest": "26.4.4",
     "typescript": "4.1.2"
   }
 }
