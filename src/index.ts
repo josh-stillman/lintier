@@ -14,9 +14,10 @@
 // X 7. new lines before spinner output.
 // X 7. help explaining how it's used, version,
 // X 7. readme.
+// X 8. write separate eslint ts.config for project?
 
 // 8. tests?
-// 8. write separate eslint ts.config for project?
+// 9. add hyperlinks to success msg for vs code plugins.
 // 5. husky
 // 9. get rid of console log for options
 // 10. add question about proceeding without git?
@@ -33,6 +34,7 @@ import { installDeps } from './installDependencies/installDependencies';
 import {
   updatePackageJson,
   writeEslintRc,
+  writeEslintTsconfig,
   writePrettierRc,
   writeStylelintRc,
 } from './writeConfigs/writeConfigs';
@@ -87,12 +89,12 @@ const main = async () => {
     sass,
   });
 
-  const eslintSpinner = ora('Writing .prettierrc...').start();
+  const prettierSpinner = ora('Writing .prettierrc...').start();
 
   await writePrettierRc();
 
   // TODO: move spinners into methods?
-  const prettierSpinner = eslintSpinner.succeed().start('Writing .eslintrc...');
+  const eslintSpinner = prettierSpinner.succeed().start('Writing .eslintrc...');
 
   await writeEslintRc({
     react,
@@ -100,7 +102,13 @@ const main = async () => {
     airBnb,
   });
 
-  prettierSpinner.succeed();
+  const tsconfigSpinner = eslintSpinner
+    .succeed()
+    .start('Writing eslint tsconfig file...');
+
+  await writeEslintTsconfig();
+
+  tsconfigSpinner.succeed();
 
   if (styleLint) {
     const stylelintSpinner = ora('Writing .stylelintrc...').start();
