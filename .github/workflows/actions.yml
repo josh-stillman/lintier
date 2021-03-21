@@ -1,0 +1,19 @@
+name: My First Action
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install
+      run: npm i
+    - name: Build
+      run: npm run build
+    - name: Test
+      run: npm run test
+    - name: Lint
+      run: npm run lint

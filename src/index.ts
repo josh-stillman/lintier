@@ -16,11 +16,16 @@
 // X 7. readme.
 // X 8. write separate eslint ts.config for project?
 
-// 8. tests?
+// 8. styled components - try disabling stylelint/prettier for .ts/x files.
+
 // 9. add hyperlinks to success msg for vs code plugins.
 // 5. husky
-// 9. get rid of console log for options
+// 11. use js files for configs.
 // 10. add question about proceeding without git?
+// 9. get rid of console log for options
+// 12. setup ci/cd tests and linting in github actions
+// 13. setup ci/cd publish to npm on merge to main on github actions
+// 8. more tests?
 // 7. test on npx.
 
 import fs from 'fs';
