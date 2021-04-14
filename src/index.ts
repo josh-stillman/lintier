@@ -20,13 +20,14 @@
 // 8. styled components - try disabling stylelint/prettier for .ts/x files.
 
 // 9. add hyperlinks to success msg for vs code plugins.
+// 10. Pin versions - one release pinned, one unpinned to catch new updates
 // 5. husky
 // 11. use js files for configs.
 // 10. add question about proceeding without git?
 // 9. get rid of console log for options
 
 // 13. setup ci/cd publish to npm on merge to main on github actions
-// 8. more tests?
+// 8. more tests? (no)
 // 7. test on npx.
 
 import fs from 'fs';
