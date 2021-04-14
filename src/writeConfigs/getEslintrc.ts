@@ -32,8 +32,7 @@ const getExtends = ({
   'plugin:@typescript-eslint/eslint-recommended',
   'plugin:@typescript-eslint/recommended',
   'plugin:@typescript-eslint/recommended-requiring-type-checking',
-  'prettier/@typescript-eslint',
-  ...(react ? ['prettier/react'] : []),
+  'prettier',
   'plugin:prettier/recommended', // must be last in array
 ];
 
