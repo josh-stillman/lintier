@@ -75,6 +75,7 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/require-await': 'off',
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/no-unresolved': 'off',
