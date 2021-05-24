@@ -32,8 +32,7 @@ const getExtends = ({
   'plugin:@typescript-eslint/eslint-recommended',
   'plugin:@typescript-eslint/recommended',
   'plugin:@typescript-eslint/recommended-requiring-type-checking',
-  'prettier/@typescript-eslint',
-  ...(react ? ['prettier/react'] : []),
+  'prettier',
   'plugin:prettier/recommended', // must be last in array
 ];
 
@@ -76,6 +75,7 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/require-await': 'off',
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/no-unresolved': 'off',
