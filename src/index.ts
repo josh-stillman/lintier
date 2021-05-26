@@ -52,6 +52,7 @@ import {
   writePrettierRc,
   writeStylelintRc,
 } from './writeConfigs/writeConfigs';
+import { successMessage } from './successMessage';
 
 const main = async () => {
   const hasPackageJson = fs.existsSync(
@@ -147,22 +148,5 @@ const main = async () => {
     .succeed()
     .stopAndPersist({ text: successMessage(styleLint), symbol: '🎉' });
 };
-
-// link to vs code extensions?
-const successMessage = (styleLint: boolean) => `Successfully installed eslint${
-  styleLint ? ' & stylelint' : ''
-} & prettier.
-
-Next steps:
-1. Edit .rc files to your liking.
-2. Install eslint${styleLint ? ' & stylelint' : ''} VS Code plugins.
-3. Edit your VS Code settings.json to enable auto-format on save:
-
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  }"
-
-Lintier out ✌️
-`;
 
 main().catch(err => console.error(err));
