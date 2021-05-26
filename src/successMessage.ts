@@ -1,12 +1,12 @@
 import terminalLink from 'terminal-link';
 
 const eslintLink = terminalLink(
-  'eslint extension',
+  'eslint',
   'https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint'
 );
 
 const stylelintLink = terminalLink(
-  'stylelint extension',
+  'stylelint',
   'https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint'
 );
 
@@ -19,7 +19,7 @@ export const successMessage = (
 Next steps:
 1. Edit .rc files to your liking.
 
-2. Install eslint${styleLint ? ' & stylelint' : ''} VS Code plugins:
+2. Install eslint${styleLint ? ' & stylelint' : ''} VS Code extensions:
   • ${eslintLink} ${
   !styleLint
     ? ''
