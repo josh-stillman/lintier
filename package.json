@@ -1,7 +1,7 @@
 {
   "name": "lintier",
   "version": "1.1.0",
-  "description": "Setup Eslint & Prettier in Typescript projects.",
+  "description": "Setup ESLint & Prettier in TypeScript projects.",
   "main": "./bin/index.js",
   "scripts": {
     "build": "rimraf ./bin && tsc",
@@ -16,15 +16,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Josh-Stillman/lintier.git"
+    "url": "git+https://github.com/josh-stillman/lintier.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Josh-Stillman/lintier/issues"
+    "url": "https://github.com/josh-stillman/lintier/issues"
   },
-  "homepage": "https://github.com/Josh-Stillman/lintier#readme",
+  "homepage": "https://github.com/josh-stillman/lintier#readme",
   "dependencies": {
     "commander": "6.2.0",
     "execa": "4.1.0",

@@ -30,6 +30,12 @@ Alternately, you can specify the options below to skip the interactive prompts:
 
 The styled-components option just adds .ts/.js files to the package.json script to lint styles.  The stylelint config mentioned in the [styled-components docs](https://styled-components.com/docs/tooling#stylelint) seems to conflict with eslint, so I left it out for now.
 
+## Troubleshooting
+
+As of now, lintier installs the latest version of the various dependencies, and versions are not pinned.  This means breaking changes in those dependencies can break lintier, but it also means I'm more likely to keep the package up to date as I use it.  If you spot trouble, please open an issue in the GitHub repo.
+
+In the future, I plan to add scheduled testing to catch these breaking changes, as well as offer a stable, version-pinned release of lintier.
+
 ## Contributing
 
 Pull requests are welcome!  The goal is to keep lintier minimalist, so please minimize any additional rules enabled in the .rc files and options presented to the user.
