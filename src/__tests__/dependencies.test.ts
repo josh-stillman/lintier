@@ -14,7 +14,13 @@ describe('install dependencies', () => {
     ];
 
     expect(
-      getDepList({ react: true, node: false, styleLint: false, sass: false })
+      getDepList({
+        react: true,
+        node: false,
+        styleLint: false,
+        sass: false,
+        lintStaged: false,
+      })
     ).toEqual(reactDeps);
   });
 
@@ -30,7 +36,13 @@ describe('install dependencies', () => {
     ];
 
     expect(
-      getDepList({ react: false, node: true, styleLint: false, sass: false })
+      getDepList({
+        react: false,
+        node: true,
+        styleLint: false,
+        sass: false,
+        lintStaged: false,
+      })
     ).toEqual(nodeDeps);
   });
 
@@ -51,7 +63,13 @@ describe('install dependencies', () => {
     ];
 
     expect(
-      getDepList({ react: true, node: false, styleLint: true, sass: false })
+      getDepList({
+        react: true,
+        node: false,
+        styleLint: true,
+        sass: false,
+        lintStaged: false,
+      })
     ).toEqual(stylelintDeps);
   });
 
@@ -73,7 +91,13 @@ describe('install dependencies', () => {
     ];
 
     expect(
-      getDepList({ react: true, node: false, styleLint: true, sass: true })
+      getDepList({
+        react: true,
+        node: false,
+        styleLint: true,
+        sass: true,
+        lintStaged: false,
+      })
     ).toEqual(stylelintDeps);
   });
 
@@ -93,10 +117,18 @@ describe('install dependencies', () => {
       'stylelint-prettier',
       'stylelint-config-standard',
       'stylelint-config-sass-guidelines',
+      'simple-git-hooks',
+      'lint-staged',
     ];
 
     expect(
-      getDepList({ react: true, node: true, styleLint: true, sass: true })
+      getDepList({
+        react: true,
+        node: true,
+        styleLint: true,
+        sass: true,
+        lintStaged: true,
+      })
     ).toEqual(allDeps);
   });
 });

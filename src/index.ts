@@ -8,12 +8,14 @@ import { exit } from 'process';
 
 import ora from 'ora';
 
+import execa from 'execa';
 import { getConfig } from './getOptions/getOptions';
 import { installDeps } from './installDependencies/installDependencies';
 import {
   updatePackageJson,
   writeEslintRc,
   writeEslintTsconfig,
+  writeLintStagedConfig,
   writePrettierRc,
   writeStylelintRc,
 } from './writeConfigs/writeConfigs';
@@ -45,20 +47,8 @@ const main = async () => {
     styleLint,
     styledComponents,
     sass,
-    husky,
+    lintStaged,
   } = await getConfig();
-
-  console.log({
-    react,
-    node,
-    airBnb,
-    styleLint,
-    styledComponents,
-    sass,
-    husky,
-  });
-
-  console.log();
 
   await installDeps({
     useYarn,
@@ -67,6 +57,7 @@ const main = async () => {
     airBnb,
     styleLint,
     sass,
+    lintStaged,
   });
 
   const prettierSpinner = ora('Writing .prettierrc...').start();
@@ -98,16 +89,29 @@ const main = async () => {
     stylelintSpinner.succeed();
   }
 
+  if (lintStaged) {
+    const lintStagedSpinner = ora('Writing lint-staged config...').start();
+
+    await writeLintStagedConfig({ styleLint });
+
+    lintStagedSpinner.succeed();
+  }
+
   const packageSpinner = ora(
     'Updating package.json with lint scripts...'
   ).start();
 
   await updatePackageJson({
     styleLint,
-    // husky,
+    lintStaged,
     sass,
     styledComponents,
   });
+
+  if (lintStaged) {
+    // register git hooks after updating package.json
+    await execa('npx', ['simple-git-hooks']);
+  }
 
   packageSpinner
     .succeed()
