@@ -49,19 +49,19 @@ export const askQuestions = async (): Promise<ConfigAnswers> => {
       ])) as unknown) as { styleType: StyleType })
     : { styleType: 'Neither' };
 
-  const husky = ((await inquirer.prompt([
+  const lintStaged = ((await inquirer.prompt([
     {
       type: 'confirm',
-      name: 'husky',
-      message: 'Install Husky and Lint-Staged?',
-      default: 'React',
+      name: 'lintStaged',
+      message: 'Install lint-staged?',
+      default: false,
     },
-  ])) as unknown) as { husky: boolean };
+  ])) as unknown) as { lintStaged: boolean };
 
   return {
     ...projectType,
     ...styleLint,
-    ...husky,
+    ...lintStaged,
     ...styleType,
   } as ConfigAnswers;
 };

@@ -22,7 +22,7 @@ Alternately, you can specify the options below to skip the interactive prompts:
   |-s, --styleLint         |install stylelint
   |-c, --styledComponents  |install styled-components lint script
   |-p, --sass              |install sass stylelint config & lint script
-  |-h, --husky             |install husky and lint-staged
+  |-l, --lintStaged        |install lint-staged and simple-git-hooks
   |--help                  |display help for command
   |-V, --version           |output the version number
 

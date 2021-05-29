@@ -26,6 +26,7 @@ Next steps:
     : `
   • ${stylelintLink}`
 }
+
 3. Edit your VS Code settings.json to enable auto-format on save:
 
   "editor.codeActionsOnSave": {

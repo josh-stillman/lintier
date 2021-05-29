@@ -29,7 +29,7 @@ export const getArgs = () => {
       'install styled-components / css-in-js lint script'
     )
     .option('-p, --sass', 'install sass stylelint config & lint script')
-    .option('-h, --husky', 'install husky and lint-staged');
+    .option('-l, --lintStaged', 'install lint-staged');
 
   program.parse(process.argv);
 
