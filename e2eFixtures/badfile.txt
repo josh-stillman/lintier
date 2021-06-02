@@ -1,0 +1,5 @@
+export const myFunc =
+() => {
+
+              return 5 == 6;
+};
