@@ -1,0 +1,6 @@
+.app {
+  font-family: 'East Sea Dokdo', cursive, sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+            text-align: center;
+}
