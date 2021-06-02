@@ -23,12 +23,13 @@ RUN npx create-snowpack-app test-app --template @snowpack/app-template-react-typ
 
 WORKDIR /test/test-app
 
-RUN npm install -D jest ts-jest @types/node @types/jest
+RUN npm install -D jest ts-jest @types/node @types/jest execa
 
 # TODO: copy in test fixtures (bad files to test)
 # TODO: change dir to e2e fixtures
 COPY ./src/__tests__/e2e.test.ts ./src/__tests__/e2e.test.ts
 COPY ./e2eFixtures/e2e.jest.config.js ./jest.config.js
+COPY ./e2eFixtures/badfile.txt ./src/badfile.ts
 
 # 3. run lintier in test project directory
 
