@@ -1,16 +1,18 @@
 # Lintier
 
-Lintier is a script to quickly and easily scaffold an eslint/prettier/stylelint setup in a TypeScript project.  Because linting and code formatting are essential in every project, but setup is a pain.
+![E2E Test Status](https://github.com/josh-stillman/lintier/actions/workflows/e2e.yml/badge.svg) [![Version](https://img.shields.io/npm/v/lintier.svg?style=flat-square)](https://www.npmjs.com/package/lintier?activeTab=versions) [![Downloads](https://img.shields.io/npm/dt/lintier.svg?style=flat-square)](https://www.npmjs.com/package/lintier) [![Last commit](https://img.shields.io/github/last-commit/josh-stillman/lintier.svg?style=flat-square)](https://github.com/josh-stillman/lintier/graphs/commit-activity)
 
-Lintier works in React, Node, and/or vanilla Typescript projects. It provides an option to install the popular airbnb styleguide, as well as specify a stylelint config.
+Lintier is a script to quickly and easily scaffold an [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) setup in a [TypeScript](https://www.typescriptlang.org/) project.  Because linting and code formatting are essential in every project, but setup is a pain.
 
-Lintier will install the necessary dependencies for your project type, create the required .rc files, and add relevant linting scripts to your `package.json` file.
+Lintier works in React, Node, and/or vanilla Typescript projects. It provides options to install the [airbnb styleguide](https://github.com/iamturns/eslint-config-airbnb-typescript), [stylelint](https://stylelint.io/) for linting styles, and [lint-staged](https://github.com/okonet/lint-staged#readme) for linting pre-commit.
 
-Lintier's goal is to provide a minimal setup from which to build on.  A few rules are included by default as a point of personal privilege, but you should modify the .rc files created to fit your project's needs.
+Lintier will install the dependencies, create the config files, and add linting scripts to your `package.json` file.
+
+Lintier's goal is to provide a minimal setup from which to build on.  A few rules are included by default, but you should modify the config files to fit your project's needs.
 
 ## Usage
 
-Lintier is best used with `npx`. Just run `npx lintier` in your project's directory.  Linter will start in interactive mode if no options are provided, allowing you to specify your project type and configuration.
+Just run `npx lintier` in your project's directory.  Linter will start in interactive mode, allowing you to specify your project type and configuration.
 
 Alternately, you can specify the options below to skip the interactive prompts:
 
@@ -32,11 +34,11 @@ The styled-components option just adds .ts/.js files to the package.json script 
 
 ## Troubleshooting
 
-As of now, lintier installs the latest version of the various dependencies, and versions are not pinned.  This means breaking changes in those dependencies can break lintier, but it also means I'm more likely to keep the package up to date as I use it.  If you spot trouble, please open an issue in the GitHub repo.
+Lintier installs the latest version of the various dependencies, and versions are not pinned.  This means breaking changes in those dependencies can break lintier, but it also means I'm more likely to keep the package up to date as I use it.  A weekly scheduled end-to-end test is also setup to help catch these changes.
 
-In the future, I plan to add scheduled testing to catch these breaking changes, as well as offer a stable, version-pinned release of lintier.
+If you spot trouble, please open an issue in the GitHub repo.
 
 ## Contributing
 
-Pull requests are welcome!  The goal is to keep lintier minimalist, so please minimize any additional rules enabled in the .rc files and options presented to the user.
+Pull requests are welcome!  The goal is to keep lintier minimalist, so please minimize any additional rules enabled and options presented to the user.
 
