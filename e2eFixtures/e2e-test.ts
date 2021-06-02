@@ -27,7 +27,7 @@ describe('test configs', () => {
     );
 
     const lintStagedExists = fs.existsSync(
-      path.join(process.cwd(), 'lint-staged-config.js')
+      path.join(process.cwd(), 'lint-staged.config.js')
     );
 
     expect(eslintExists).toBeTruthy();
