@@ -15,4 +15,4 @@ jobs:
     - name: Build docker image
       run: docker build -f "e2e.Dockerfile" -t lintier-e2e:latest "."
     - name: Run e2e tests
-      run: docker run --rm -it lintier-e2e:latest
+      run: docker run --rm -i lintier-e2e:latest
