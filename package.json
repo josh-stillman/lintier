@@ -14,6 +14,9 @@
   "bin": {
     "lintier": "bin/index.js"
   },
+  "files": [
+    "/bin"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/josh-stillman/lintier.git"
