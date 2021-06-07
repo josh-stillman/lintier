@@ -7,6 +7,7 @@ import path from 'path';
 import { exit } from 'process';
 
 import ora from 'ora';
+import chalk from 'chalk';
 
 import execa from 'execa';
 import { getConfig } from './getOptions/getOptions';
@@ -20,6 +21,7 @@ import {
   writeStylelintRc,
 } from './writeConfigs/writeConfigs';
 import { successMessage } from './successMessage';
+import { PROGRESS_MESSAGES } from './progressMessages';
 
 const main = async () => {
   const hasPackageJson = fs.existsSync(
@@ -60,12 +62,14 @@ const main = async () => {
     lintStaged,
   });
 
-  const prettierSpinner = ora('Writing .prettierrc...').start();
+  const prettierSpinner = ora(chalk.cyan(PROGRESS_MESSAGES.prettier)).start();
 
   await writePrettierRc();
 
   // TODO: move spinners into methods?
-  const eslintSpinner = prettierSpinner.succeed().start('Writing .eslintrc...');
+  const eslintSpinner = prettierSpinner
+    .succeed(chalk.green(PROGRESS_MESSAGES.prettier))
+    .start(chalk.cyan(PROGRESS_MESSAGES.eslint));
 
   await writeEslintRc({
     react,
@@ -74,32 +78,34 @@ const main = async () => {
   });
 
   const tsconfigSpinner = eslintSpinner
-    .succeed()
-    .start('Writing eslint tsconfig file...');
+    .succeed(chalk.green(PROGRESS_MESSAGES.eslint))
+    .start(chalk.cyan(PROGRESS_MESSAGES.tsconfig));
 
   await writeEslintTsconfig();
 
-  tsconfigSpinner.succeed();
+  tsconfigSpinner.succeed(chalk.green(PROGRESS_MESSAGES.tsconfig));
 
   if (styleLint) {
-    const stylelintSpinner = ora('Writing .stylelintrc...').start();
+    const stylelintSpinner = ora(
+      chalk.cyan(PROGRESS_MESSAGES.stylelint)
+    ).start();
 
     await writeStylelintRc({ sass });
 
-    stylelintSpinner.succeed();
+    stylelintSpinner.succeed(chalk.green(PROGRESS_MESSAGES.stylelint));
   }
 
   if (lintStaged) {
-    const lintStagedSpinner = ora('Writing lint-staged config...').start();
+    const lintStagedSpinner = ora(
+      chalk.cyan(PROGRESS_MESSAGES.lintStaged)
+    ).start();
 
     await writeLintStagedConfig({ styleLint });
 
-    lintStagedSpinner.succeed();
+    lintStagedSpinner.succeed(chalk.green(PROGRESS_MESSAGES.lintStaged));
   }
 
-  const packageSpinner = ora(
-    'Updating package.json with lint scripts...'
-  ).start();
+  const packageSpinner = ora(chalk.cyan(PROGRESS_MESSAGES.packageJson)).start();
 
   await updatePackageJson({
     styleLint,
@@ -114,7 +120,7 @@ const main = async () => {
   }
 
   packageSpinner
-    .succeed()
+    .succeed(chalk.green(PROGRESS_MESSAGES.packageJson))
     .stopAndPersist({ text: successMessage(styleLint), symbol: '🎉' });
 };
 

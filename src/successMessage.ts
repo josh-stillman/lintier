@@ -1,4 +1,5 @@
 import terminalLink from 'terminal-link';
+import chalk from 'chalk';
 
 const eslintLink = terminalLink(
   'eslint',
@@ -12,14 +13,16 @@ const stylelintLink = terminalLink(
 
 export const successMessage = (
   styleLint: boolean
-) => `Successfully installed eslint${
+) => `${chalk.underline.italic.greenBright(
+  `Successfully installed eslint${styleLint ? ' & stylelint' : ''} & prettier.`
+)}
+
+${chalk.italic('Next steps:')}
+${chalk.bgGray('1.')} Edit .rc files to your liking.
+
+${chalk.bgGray('2.')} Install eslint${
   styleLint ? ' & stylelint' : ''
-} & prettier.
-
-Next steps:
-1. Edit .rc files to your liking.
-
-2. Install eslint${styleLint ? ' & stylelint' : ''} VS Code extensions:
+} VS Code extensions:
   • ${eslintLink} ${
   !styleLint
     ? ''
@@ -27,11 +30,13 @@ Next steps:
   • ${stylelintLink}`
 }
 
-3. Edit your VS Code settings.json to enable auto-format on save:
+${chalk.bgGray(
+  '3.'
+)} Edit your VS Code settings.json to enable auto-format on save:
 
-  "editor.codeActionsOnSave": {
+${chalk.bgGray(`  "editor.codeActionsOnSave": {
     "source.fixAll": true
-  }"
+  }"`)}
 
-Lintier out ✌️
+${chalk.cyanBright.italic.underline('Lintier out ✌️')}
 `;

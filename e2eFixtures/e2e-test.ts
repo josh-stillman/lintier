@@ -82,6 +82,14 @@ describe('test package.json', () => {
   });
 });
 
+describe('test pre-commit hook', () => {
+  test('pre-commit hook was added', () => {
+    const preCommitHook = fs.readFileSync('./.git/hooks/pre-commit', 'utf8');
+
+    expect(preCommitHook).toMatch('npx lint-staged');
+  });
+});
+
 describe('test eslint', () => {
   test('eslint and eslint --fix work', async () => {
     const filePath = './src/badfile.ts';

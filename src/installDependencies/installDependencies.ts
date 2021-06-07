@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import execa from 'execa';
-import ora, { Ora } from 'ora';
+import ora from 'ora';
+import chalk from 'chalk';
+import { PROGRESS_MESSAGES } from '../progressMessages';
 
 export const installDeps = async ({
   useYarn,
@@ -19,27 +21,20 @@ export const installDeps = async ({
   sass: boolean;
   lintStaged: boolean;
 }) => {
-  const spinner = ora('Installing dependencies...').start();
+  const spinner = ora(chalk.cyan(PROGRESS_MESSAGES.dependencies)).start();
 
-  const inst = await execa(useYarn ? 'yarn' : 'npm', [
+  await execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
     ...getDepList({ node, react, styleLint, sass, lintStaged }),
     '-E',
     '-D',
   ]);
 
-  spinner.stopAndPersist();
-
-  console.log(inst.stdout, inst.stderr);
-  console.log();
+  spinner.succeed(chalk.green(PROGRESS_MESSAGES.dependencies));
 
   if (airBnb) {
-    await installAirBnb({ useYarn, depsSpinner: spinner });
-
-    return;
+    await installAirBnb({ useYarn });
   }
-
-  spinner.succeed();
 };
 
 export const getDepList = ({
@@ -77,16 +72,10 @@ export const getDepList = ({
   ];
 };
 
-const installAirBnb = async ({
-  useYarn,
-  depsSpinner,
-}: {
-  useYarn: boolean;
-  depsSpinner: Ora;
-}) => {
-  const airBnbSpinner = ora('Installing airbnb...').start();
+const installAirBnb = async ({ useYarn }: { useYarn: boolean }) => {
+  const airBnbSpinner = ora(chalk.cyan(PROGRESS_MESSAGES.airbnb)).start();
 
-  const inst = await execa(useYarn ? 'yarn' : 'npm', [
+  await execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
     ...[
       'eslint-config-airbnb-typescript',
@@ -97,13 +86,5 @@ const installAirBnb = async ({
     '-D',
   ]);
 
-  airBnbSpinner.stopAndPersist();
-
-  console.log(inst.stdout, inst.stderr);
-
-  console.log();
-
-  depsSpinner.succeed();
-
-  airBnbSpinner.succeed();
+  airBnbSpinner.succeed(chalk.green(PROGRESS_MESSAGES.airbnb));
 };
