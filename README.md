@@ -2,9 +2,9 @@
 
 ![E2E Test Status](https://github.com/josh-stillman/lintier/actions/workflows/e2e.yml/badge.svg) [![Version](https://img.shields.io/npm/v/lintier.svg?style=flat-square)](https://www.npmjs.com/package/lintier?activeTab=versions) [![Downloads](https://img.shields.io/npm/dt/lintier.svg?style=flat-square)](https://www.npmjs.com/package/lintier) [![Last commit](https://img.shields.io/github/last-commit/josh-stillman/lintier.svg?style=flat-square)](https://github.com/josh-stillman/lintier/graphs/commit-activity)
 
-![](lintier.gif)
+### Lintier is a CLI to quickly scaffold an [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) setup in a [TypeScript](https://www.typescriptlang.org/) project.  Because linting and code formatting are a must, but setup is a pain.
 
-Lintier is a script to quickly and easily scaffold an [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) setup in a [TypeScript](https://www.typescriptlang.org/) project.  Because linting and code formatting are essential in every project, but setup is a pain.
+![](https://github.com/josh-stillman/lintier/blob/main/lintier.gif?raw=true)
 
 Lintier works in React, Node, and vanilla Typescript projects. It provides options to install the [airbnb styleguide](https://github.com/iamturns/eslint-config-airbnb-typescript), [stylelint](https://stylelint.io/) for linting styles, and [lint-staged](https://github.com/okonet/lint-staged#readme) for linting pre-commit. Lintier will install the dependencies, create the config files, and add linting scripts to your `package.json` file.
 
