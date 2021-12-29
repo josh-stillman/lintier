@@ -25,7 +25,7 @@ WORKDIR /test/test-app
 
 # 3. setup e2e tests
 
-RUN npm install -D jest ts-jest @types/node @types/jest execa
+RUN npm install -D jest ts-jest @types/node @types/jest execa@4.1.0
 
 COPY ./e2eFixtures/e2e-test.ts ./src/__tests__/e2e.test.ts
 COPY ./e2eFixtures/e2e.jest.config.js ./jest.config.js
