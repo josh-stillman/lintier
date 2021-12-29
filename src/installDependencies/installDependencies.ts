@@ -33,7 +33,7 @@ export const installDeps = async ({
   spinner.succeed(chalk.green(PROGRESS_MESSAGES.dependencies));
 
   if (airBnb) {
-    await installAirBnb({ useYarn });
+    await installAirBnb({ useYarn, react });
   }
 };
 
@@ -72,16 +72,26 @@ export const getDepList = ({
   ];
 };
 
-const installAirBnb = async ({ useYarn }: { useYarn: boolean }) => {
+const installAirBnb = async ({
+  useYarn,
+  react,
+}: {
+  useYarn: boolean;
+  react: boolean;
+}) => {
   const airBnbSpinner = ora(chalk.cyan(PROGRESS_MESSAGES.airbnb)).start();
+
+  await execa('npx', [
+    'install-peerdeps',
+    `-D${useYarn ? 'Y' : ''}`,
+    '-x',
+    '-E',
+    react ? 'eslint-config-airbnb' : 'eslint-config-airbnb-base',
+  ]);
 
   await execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
-    ...[
-      'eslint-config-airbnb-typescript',
-      'eslint-plugin-import',
-      'eslint-plugin-jsx-a11y',
-    ],
+    ...['eslint-config-airbnb-typescript'],
     '-E',
     '-D',
   ]);
