@@ -9,7 +9,10 @@
     "restart": "node bin/index.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix .",
-    "test": "jest"
+    "test": "jest",
+    "e2e-build": "docker build -f 'e2e.Dockerfile' -t lintier-e2e:latest '.'",
+    "e2e-run": "docker run --rm -i lintier-e2e:latest",
+    "e2e": "npm run e2e-build && npm run e2e-run"
   },
   "bin": {
     "lintier": "bin/index.js"
