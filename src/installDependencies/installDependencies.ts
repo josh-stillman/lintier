@@ -70,7 +70,7 @@ export const getDepList = ({
         ]
       : []),
     ...(lintStaged ? ['simple-git-hooks', 'lint-staged'] : []),
-  ];
+  ].map(entry => `${entry}@latest`);
 };
 
 const installAirBnb = async ({
