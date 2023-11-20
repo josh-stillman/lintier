@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:lts
 
 # SHELL ["/bin/bash", "-c"]
 
@@ -32,7 +32,7 @@ COPY ./e2eFixtures/e2e.jest.config.js ./jest.config.js
 COPY ./e2eFixtures/badfile.txt ./src/badfile.ts
 COPY ./e2eFixtures/badcss.txt ./src/badcss.css
 
-# 4. run lintier in test project directory, installing everything
+# 4. run lintier in test proeject directory, installing everything
 
 RUN node ../../lintier/bin/index.js -rnascpl
 
