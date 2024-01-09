@@ -3,14 +3,14 @@ import { getDepList } from '../installDependencies/installDependencies';
 describe('install dependencies', () => {
   test('react', () => {
     const reactDeps = [
-      'eslint',
-      'prettier',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
-      'eslint-config-prettier',
-      'eslint-plugin-prettier',
-      'eslint-plugin-react',
-      'eslint-plugin-react-hooks',
+      'eslint@latest',
+      'prettier@latest',
+      '@typescript-eslint/eslint-plugin@latest',
+      '@typescript-eslint/parser@latest',
+      'eslint-config-prettier@latest',
+      'eslint-plugin-prettier@latest',
+      'eslint-plugin-react@latest',
+      'eslint-plugin-react-hooks@latest',
     ];
 
     expect(
@@ -26,13 +26,13 @@ describe('install dependencies', () => {
 
   test('node', () => {
     const nodeDeps = [
-      'eslint',
-      'prettier',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
-      'eslint-config-prettier',
-      'eslint-plugin-prettier',
-      'eslint-plugin-node',
+      'eslint@latest',
+      'prettier@latest',
+      '@typescript-eslint/eslint-plugin@latest',
+      '@typescript-eslint/parser@latest',
+      'eslint-config-prettier@latest',
+      'eslint-plugin-prettier@latest',
+      'eslint-plugin-node@latest',
     ];
 
     expect(
@@ -48,18 +48,18 @@ describe('install dependencies', () => {
 
   test('react + stylelint', () => {
     const stylelintDeps = [
-      'eslint',
-      'prettier',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
-      'eslint-config-prettier',
-      'eslint-plugin-prettier',
-      'eslint-plugin-react',
-      'eslint-plugin-react-hooks',
-      'stylelint',
-      'stylelint-config-prettier',
-      'stylelint-prettier',
-      'stylelint-config-standard',
+      'eslint@latest',
+      'prettier@latest',
+      '@typescript-eslint/eslint-plugin@latest',
+      '@typescript-eslint/parser@latest',
+      'eslint-config-prettier@latest',
+      'eslint-plugin-prettier@latest',
+      'eslint-plugin-react@latest',
+      'eslint-plugin-react-hooks@latest',
+      'stylelint@latest',
+      'stylelint-config-prettier@latest',
+      'stylelint-prettier@latest',
+      'stylelint-config-standard@latest',
     ];
 
     expect(
@@ -75,19 +75,19 @@ describe('install dependencies', () => {
 
   test('react + stylelint + sass', () => {
     const stylelintDeps = [
-      'eslint',
-      'prettier',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
-      'eslint-config-prettier',
-      'eslint-plugin-prettier',
-      'eslint-plugin-react',
-      'eslint-plugin-react-hooks',
-      'stylelint',
-      'stylelint-config-prettier',
-      'stylelint-prettier',
-      'stylelint-config-standard',
-      'stylelint-config-sass-guidelines',
+      'eslint@latest',
+      'prettier@latest',
+      '@typescript-eslint/eslint-plugin@latest',
+      '@typescript-eslint/parser@latest',
+      'eslint-config-prettier@latest',
+      'eslint-plugin-prettier@latest',
+      'eslint-plugin-react@latest',
+      'eslint-plugin-react-hooks@latest',
+      'stylelint@latest',
+      'stylelint-config-prettier@latest',
+      'stylelint-prettier@latest',
+      'stylelint-config-standard@latest',
+      'stylelint-config-sass-guidelines@latest',
     ];
 
     expect(
@@ -103,22 +103,22 @@ describe('install dependencies', () => {
 
   test('all', () => {
     const allDeps = [
-      'eslint',
-      'prettier',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
-      'eslint-config-prettier',
-      'eslint-plugin-prettier',
-      'eslint-plugin-node',
-      'eslint-plugin-react',
-      'eslint-plugin-react-hooks',
-      'stylelint',
-      'stylelint-config-prettier',
-      'stylelint-prettier',
-      'stylelint-config-standard',
-      'stylelint-config-sass-guidelines',
-      'simple-git-hooks',
-      'lint-staged',
+      'eslint@latest',
+      'prettier@latest',
+      '@typescript-eslint/eslint-plugin@latest',
+      '@typescript-eslint/parser@latest',
+      'eslint-config-prettier@latest',
+      'eslint-plugin-prettier@latest',
+      'eslint-plugin-node@latest',
+      'eslint-plugin-react@latest',
+      'eslint-plugin-react-hooks@latest',
+      'stylelint@latest',
+      'stylelint-config-prettier@latest',
+      'stylelint-prettier@latest',
+      'stylelint-config-standard@latest',
+      'stylelint-config-sass-guidelines@latest',
+      'simple-git-hooks@latest',
+      'lint-staged@latest',
     ];
 
     expect(
