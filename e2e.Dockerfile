@@ -1,4 +1,4 @@
-FROM node:14
+FROM --platform=linux/amd64 node:lts
 
 # SHELL ["/bin/bash", "-c"]
 

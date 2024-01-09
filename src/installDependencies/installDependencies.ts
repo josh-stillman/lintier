@@ -28,6 +28,7 @@ export const installDeps = async ({
     ...getDepList({ node, react, styleLint, sass, lintStaged }),
     '-E',
     '-D',
+    '--force',
   ]);
 
   spinner.succeed(chalk.green(PROGRESS_MESSAGES.dependencies));
@@ -69,7 +70,7 @@ export const getDepList = ({
         ]
       : []),
     ...(lintStaged ? ['simple-git-hooks', 'lint-staged'] : []),
-  ];
+  ].map(entry => `${entry}@latest`);
 };
 
 const installAirBnb = async ({
