@@ -35,7 +35,7 @@ ${chalk.italic.red(
 )} Edit your VS Code settings.json to enable auto-format on save:
 
 ${chalk.gray(`  "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   }"`)}
 
 ${chalk.cyanBright.italic.underline('Lintier out ✌️')}
