@@ -1,3 +1,4 @@
+// TODO: remove and update this file
 export const getEslintRc = ({
   node,
   react,
@@ -15,6 +16,34 @@ export const getEslintRc = ({
   settings: getSettings(react),
   rules: getRules({ node, react }),
 });
+
+export const getEslintConfig = () => `${getImports()}
+
+export default tseslint.config(
+ {
+    ignores: ['dist', 'build', 'node_modules'],
+  },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  eslintPluginPrettierRecommended,
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.jest,
+      },
+    },
+    rules: {},
+  });
+`;
+
+const getImports = () => `// @ts-check
+
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import globals from 'globals';`;
 
 const getExtends = ({
   react,

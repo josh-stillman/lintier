@@ -9,7 +9,7 @@ import path from 'path';
 
 import { basePrettierRc } from './basePrettierRc';
 import { getBaseStylelintRc } from './baseStylelintRc';
-import { getEslintRc } from './getEslintrc';
+import { getEslintConfig } from './getEslintrc';
 import { getEslintTsconfig } from './getEslintTsconfig';
 import { getLintStagedConfig } from './getLintStagedConfig';
 
@@ -71,6 +71,7 @@ export const writeLintStagedConfig = async ({
 }) =>
   writeLocalFileString('lint-staged.config.js', getLintStagedConfig(styleLint));
 
+// TODO: update arguments
 export const writeEslintRc = async ({
   node,
   react,
@@ -79,7 +80,7 @@ export const writeEslintRc = async ({
   node: boolean;
   react: boolean;
   airBnb: boolean;
-}) => writeLocalFile('.eslintrc', getEslintRc({ node, react, airBnb }));
+}) => writeLocalFileString('eslint.config.mjs', getEslintConfig());
 
 const writeLocalFile = async (
   fileName: string,
