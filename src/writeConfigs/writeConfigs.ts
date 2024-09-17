@@ -10,7 +10,6 @@ import path from 'path';
 import { basePrettierRc } from './basePrettierRc';
 import { getBaseStylelintRc } from './baseStylelintRc';
 import { getEslintConfig } from './getEslintrc';
-import { getEslintTsconfig } from './getEslintTsconfig';
 import { getLintStagedConfig } from './getLintStagedConfig';
 
 export const updatePackageJson = async ({
@@ -54,9 +53,6 @@ export const updatePackageJson = async ({
 
   return writeLocalFile('package.json', packageJson);
 };
-
-export const writeEslintTsconfig = async () =>
-  writeLocalFile('tsconfig.eslint.json', getEslintTsconfig());
 
 export const writePrettierRc = async () =>
   writeLocalFile('.prettierrc', basePrettierRc);

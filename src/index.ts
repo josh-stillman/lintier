@@ -15,7 +15,6 @@ import { installDeps } from './installDependencies/installDependencies';
 import {
   updatePackageJson,
   writeEslintRc,
-  writeEslintTsconfig,
   writeLintStagedConfig,
   writePrettierRc,
   writeStylelintRc,
@@ -77,13 +76,7 @@ const main = async () => {
     airBnb,
   });
 
-  const tsconfigSpinner = eslintSpinner
-    .succeed(chalk.green(PROGRESS_MESSAGES.eslint))
-    .start(chalk.cyan(PROGRESS_MESSAGES.tsconfig));
-
-  await writeEslintTsconfig();
-
-  tsconfigSpinner.succeed(chalk.green(PROGRESS_MESSAGES.tsconfig));
+  eslintSpinner.succeed(chalk.green(PROGRESS_MESSAGES.eslint));
 
   if (styleLint) {
     const stylelintSpinner = ora(

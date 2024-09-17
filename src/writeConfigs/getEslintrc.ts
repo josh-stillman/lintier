@@ -80,7 +80,6 @@ const getParserOptions = (react: boolean) => ({
       }
     : {}),
   sourceType: 'module',
-  project: './tsconfig.eslint.json',
 });
 
 const getPlugins = (react: boolean) => [

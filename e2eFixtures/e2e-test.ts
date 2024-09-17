@@ -18,10 +18,6 @@ describe('test configs', () => {
       path.join(process.cwd(), '.prettierrc')
     );
 
-    const eslintTsconfigExists = fs.existsSync(
-      path.join(process.cwd(), 'tsconfig.eslint.json')
-    );
-
     const stylelintExists = fs.existsSync(
       path.join(process.cwd(), '.stylelintrc')
     );
@@ -33,7 +29,6 @@ describe('test configs', () => {
     expect(eslintExists).toBeTruthy();
     expect(prettierExists).toBeTruthy();
     expect(stylelintExists).toBeTruthy();
-    expect(eslintTsconfigExists).toBeTruthy();
     expect(lintStagedExists).toBeTruthy();
   });
 });
