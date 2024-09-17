@@ -29,8 +29,7 @@ export const updatePackageJson = async ({
     'package.json'
   )) as Record<string, unknown>;
 
-  const eslintScript =
-    'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .';
+  const eslintScript = 'eslint .';
 
   const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css${
     sass ? ',scss,sass' : ''
@@ -41,7 +40,7 @@ export const updatePackageJson = async ({
     ...(packageJson.scripts as Object | undefined),
     ...{
       lint: `${eslintScript}${styleLint ? ` && ${stylelintScript}` : ''}`,
-      'lint:fix': `${eslintScript} --fix${
+      'lint:fix': `npm run lint -- --fix${
         styleLint ? ` && ${stylelintScript} --fix` : ''
       }`,
     },
