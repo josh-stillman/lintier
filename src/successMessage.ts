@@ -18,7 +18,7 @@ export const successMessage = (
 )}
 
 ${chalk.italic('Next steps:')}
-${chalk.italic.red('1.')} Edit .rc files to your liking.
+${chalk.italic.red('1.')} Edit config files to your liking.
 
 ${chalk.italic.red('2.')} Install eslint${
   styleLint ? ' & stylelint' : ''
