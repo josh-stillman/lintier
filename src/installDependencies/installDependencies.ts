@@ -28,7 +28,6 @@ export const installDeps = async ({
     ...getDepList({ node, react, styleLint, sass, lintStaged }),
     '-E',
     '-D',
-    '--force',
   ]);
 
   spinner.succeed(chalk.green(PROGRESS_MESSAGES.dependencies));
@@ -54,12 +53,14 @@ export const getDepList = ({
   return [
     'eslint',
     'prettier',
-    '@typescript-eslint/eslint-plugin',
-    '@typescript-eslint/parser',
+    '@eslint/js',
+    '@types/eslint__js',
     'eslint-config-prettier',
     'eslint-plugin-prettier',
-    ...(node ? ['eslint-plugin-node'] : []),
-    ...(react ? ['eslint-plugin-react', 'eslint-plugin-react-hooks'] : []),
+    'globals',
+    'typescript-eslint',
+    // ...(node ? ['eslint-plugin-node'] : []),
+    // ...(react ? ['eslint-plugin-react', 'eslint-plugin-react-hooks'] : []),
     ...(styleLint
       ? [
           'stylelint',
