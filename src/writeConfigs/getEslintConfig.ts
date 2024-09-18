@@ -1,22 +1,3 @@
-// TODO: remove and update this file
-const getEslintRc = ({
-  node,
-  react,
-  airBnb,
-}: {
-  node: boolean;
-  react: boolean;
-  airBnb: boolean;
-}) => ({
-  extends: getExtends({ react, node, airBnb }),
-  env: getEnv({ react, node }),
-  parser: '@typescript-eslint/parser',
-  parserOptions: getParserOptions(react),
-  plugins: getPlugins(react),
-  settings: getSettings(react),
-  rules: getRules({ node, react }),
-});
-
 export const getEslintConfig = ({
   node,
   react,
@@ -29,7 +10,7 @@ export const getEslintConfig = ({
 })}
 
 export default tseslint.config(
- {
+  {
     ignores: ['dist', 'build', 'node_modules'],
   },
   eslint.configs.recommended,
@@ -51,8 +32,11 @@ export default tseslint.config(
     settings: {
       ${react ? "react: { version: 'detect' }" : ''},
     },
-    rules: ${JSON.stringify(getRules({ node, react }), null, 2)},
-  });
+    rules: {
+      ${getRules({ node, react }).join('\n      ')},
+    },
+  }
+);
 `;
 
 const getImports = ({
@@ -68,58 +52,6 @@ import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 ${react ? "import react from 'eslint-plugin-react';" : ''}
 import globals from 'globals';`;
-
-const getExtends = ({
-  react,
-  node,
-  airBnb,
-}: {
-  react: boolean;
-  node: boolean;
-  airBnb: boolean;
-}) => [
-  ...(airBnb ? [`airbnb${react ? '' : '-base'}`] : []),
-  'eslint:recommended',
-  ...(node ? ['plugin:node/recommended'] : []),
-  ...(react ? ['plugin:react/recommended'] : []),
-  'plugin:@typescript-eslint/eslint-recommended',
-  'plugin:@typescript-eslint/recommended',
-  'plugin:@typescript-eslint/recommended-requiring-type-checking',
-  'prettier',
-  'plugin:prettier/recommended', // must be last in array
-];
-
-const getEnv = ({ react, node }: { react: boolean; node: boolean }) => ({
-  ...(react ? { browser: true } : {}),
-  ...(node ? { node: true } : {}),
-  es2020: true,
-});
-
-const getParserOptions = (react: boolean) => ({
-  ...(react
-    ? {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      }
-    : {}),
-  sourceType: 'module',
-});
-
-const getPlugins = (react: boolean) => [
-  ...(react ? ['react-hooks'] : []),
-  '@typescript-eslint',
-  'prettier',
-];
-
-const getSettings = (react: boolean) =>
-  react
-    ? {
-        react: {
-          version: 'detect',
-        },
-      }
-    : {};
 
 const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
   // const baseRules = {
@@ -145,17 +77,17 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
   //   : {};
 
   const reactRules = react
-    ? {
-        'react/react-in-jsx-scope': 0,
+    ? [
+        `'react/react-in-jsx-scope': 0`,
         // 'react/require-default-props': 'off',
         // 'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
         // 'react/ state-in-constructor': 'off',
-      }
-    : {};
+      ]
+    : [];
 
-  return {
+  return [
     // ...baseRules,
     // ...nodeRules,
     ...reactRules,
-  };
+  ];
 };
