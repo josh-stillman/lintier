@@ -12,7 +12,7 @@ Lintier's goal is to provide a minimal setup to build upon.  You should modify t
 
 ## Update for ESLint 9
 
-As of Fall 2024, the community is still updating various packages to be compatible with ESLint version 9. This version of lintier disables currently incompatible packages like [eslint-plugin-react-hooks](https://github.com/facebook/react/issues/28313) and the [airbnb styleguide](https://github.com/airbnb/javascript/issues/2961).
+As of Fall 2024, the community is still updating various packages to be compatible with ESLint version 9. This version of lintier disables currently incompatible packages like [eslint-plugin-react-hooks](https://github.com/facebook/react/issues/28313), [eslint-plugin-node](https://github.com/mysticatea/eslint-plugin-node), and the [airbnb styleguide](https://github.com/airbnb/javascript/issues/2961).
 
 ## Usage
 
