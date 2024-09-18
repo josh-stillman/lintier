@@ -68,14 +68,14 @@ export const writeLintStagedConfig = async ({
   writeLocalFileString('lint-staged.config.js', getLintStagedConfig(styleLint));
 
 // TODO: update arguments
-export const writeEslintRc = async ({
+export const writeEslintConfig = async ({
   node,
   react,
-  airBnb,
-}: {
+}: // airBnb,
+{
   node: boolean;
   react: boolean;
-  airBnb: boolean;
+  // airBnb: boolean;
 }) => writeLocalFileString('eslint.config.mjs', getEslintConfig());
 
 const writeLocalFile = async (

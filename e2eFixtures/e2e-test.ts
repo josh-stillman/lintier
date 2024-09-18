@@ -40,7 +40,7 @@ describe('test package.json', () => {
     expect(devDependencies['@typescript-eslint/eslint-plugin']).toBeDefined();
     expect(devDependencies['@typescript-eslint/parser']).toBeDefined();
     expect(devDependencies.eslint).toBeDefined();
-    expect(devDependencies['eslint-config-airbnb-typescript']).toBeDefined();
+    // expect(devDependencies['eslint-config-airbnb-typescript']).toBeDefined();
     expect(devDependencies['eslint-config-prettier']).toBeDefined();
     expect(devDependencies['eslint-plugin-import']).toBeDefined();
     expect(devDependencies['eslint-plugin-jsx-a11y']).toBeDefined();

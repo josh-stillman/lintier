@@ -22,7 +22,7 @@ export const getArgs = () => {
     )
     .option('-r, --react', 'install react dependencies')
     .option('-n, --node', 'install node dependencies')
-    .option('-a, --airBnb', 'install airbnb styleguide')
+    // .option('-a, --airBnb', 'install airbnb styleguide')
     .option('-s, --styleLint', 'install stylelint')
     .option(
       '-c, --styledComponents',

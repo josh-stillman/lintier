@@ -9,7 +9,7 @@ export interface LintierConfig {
   styleLint: boolean;
   styledComponents: boolean;
   sass: boolean;
-  airBnb: boolean;
+  // airBnb: boolean;
   lintStaged: boolean;
 }
 
@@ -26,7 +26,7 @@ export interface ConfigAnswers {
   projectType: ProjectType;
   styleLint: boolean;
   styleType: StyleType;
-  airBnb: boolean;
+  // airBnb: boolean;
   lintStaged: boolean;
 }
 
@@ -43,7 +43,13 @@ export const getConfig = async () => {
 };
 
 export const transformAnswers = (answers: ConfigAnswers): LintierConfig => {
-  const { projectType, styleLint, styleType, airBnb, lintStaged } = answers;
+  const {
+    projectType,
+    styleLint,
+    styleType,
+    /* airBnb, */
+    lintStaged,
+  } = answers;
 
   return {
     react: projectType === 'React' || projectType === 'Both',
@@ -52,7 +58,7 @@ export const transformAnswers = (answers: ConfigAnswers): LintierConfig => {
     styledComponents:
       styleType === 'Styled Components  / css-in-js' || styleType === 'Both',
     sass: styleType === 'Sass' || styleType === 'Both',
-    airBnb,
+    // airBnb,
     lintStaged,
   };
 };

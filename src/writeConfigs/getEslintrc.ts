@@ -1,5 +1,5 @@
 // TODO: remove and update this file
-export const getEslintRc = ({
+const getEslintRc = ({
   node,
   react,
   airBnb,

@@ -14,7 +14,7 @@ import { getConfig } from './getOptions/getOptions';
 import { installDeps } from './installDependencies/installDependencies';
 import {
   updatePackageJson,
-  writeEslintRc,
+  writeEslintConfig,
   writeLintStagedConfig,
   writePrettierRc,
   writeStylelintRc,
@@ -44,7 +44,7 @@ const main = async () => {
   const {
     react,
     node,
-    airBnb,
+    // airBnb,
     styleLint,
     styledComponents,
     sass,
@@ -55,7 +55,7 @@ const main = async () => {
     useYarn,
     react,
     node,
-    airBnb,
+    // airBnb,
     styleLint,
     sass,
     lintStaged,
@@ -70,10 +70,10 @@ const main = async () => {
     .succeed(chalk.green(PROGRESS_MESSAGES.prettier))
     .start(chalk.cyan(PROGRESS_MESSAGES.eslint));
 
-  await writeEslintRc({
+  await writeEslintConfig({
     react,
     node,
-    airBnb,
+    // airBnb,
   });
 
   eslintSpinner.succeed(chalk.green(PROGRESS_MESSAGES.eslint));

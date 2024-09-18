@@ -14,15 +14,15 @@ export const askQuestions = async (): Promise<ConfigAnswers> => {
       choices: ['React', 'Node', 'Both', 'Neither'],
       default: 'React',
     },
-    {
-      type: 'confirm',
-      name: 'airBnb',
-      message: 'Install AirBnb Style Guide Config?',
-      default: true,
-    },
+    // {
+    //   type: 'confirm',
+    //   name: 'airBnb',
+    //   message: 'Install AirBnb Style Guide Config?',
+    //   default: true,
+    // },
   ])) as unknown) as {
     projectType: ProjectType;
-    airBnb: boolean;
+    // airBnb: boolean;
   };
 
   const styleLint =
