@@ -9,7 +9,7 @@ import path from 'path';
 
 import { basePrettierRc } from './basePrettierRc';
 import { getBaseStylelintRc } from './baseStylelintRc';
-import { getEslintConfig } from './getEslintrc';
+import { getEslintConfig } from './getEslintConfig';
 import { getLintStagedConfig } from './getLintStagedConfig';
 
 export const updatePackageJson = async ({
@@ -76,7 +76,8 @@ export const writeEslintConfig = async ({
   node: boolean;
   react: boolean;
   // airBnb: boolean;
-}) => writeLocalFileString('eslint.config.mjs', getEslintConfig());
+}) =>
+  writeLocalFileString('eslint.config.mjs', getEslintConfig({ react, node }));
 
 const writeLocalFile = async (
   fileName: string,
