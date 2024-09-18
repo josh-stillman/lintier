@@ -6,9 +6,13 @@
 
 ![](https://github.com/josh-stillman/lintier/blob/main/lintier.gif?raw=true)
 
-Lintier works in React, Node, and vanilla Typescript projects. It provides options to install the [airbnb styleguide](https://github.com/iamturns/eslint-config-airbnb-typescript), [stylelint](https://stylelint.io/) for linting styles, and [lint-staged](https://github.com/okonet/lint-staged#readme) for linting pre-commit. Lintier will install the dependencies, create the config files, and add linting scripts to your `package.json` file.
+Lintier works in React, Node, and vanilla Typescript projects. It provides options to install [stylelint](https://stylelint.io/) for linting styles, and [lint-staged](https://github.com/okonet/lint-staged#readme) for linting pre-commit. Lintier will install the dependencies, create the config files, and add linting scripts to your `package.json` file.
 
-Lintier's goal is to provide a minimal setup to build upon.  A few rules are included by default, but you should modify the config files to fit your project's needs.
+Lintier's goal is to provide a minimal setup to build upon.  You should modify the config files to fit your project's needs.
+
+## Update for ESLint 9
+
+As of Fall 2024, the community is still updating various packages to be compatible with ESLint version 9. This version of lintier disables currently incompatible packages like [eslint-plugin-react-hooks](https://github.com/facebook/react/issues/28313) and the [airbnb styleguide](https://github.com/airbnb/javascript/issues/2961).
 
 ## Usage
 
@@ -20,7 +24,6 @@ Alternately, you can specify any of the options below to skip the interactive pr
   -------------------------|-------------------------
   |-r, --react             |install react dependencies
   |-n, --node              |install node dependencies
-  |-a, --airBnb            |install airbnb styleguide
   |-s, --styleLint         |install stylelint
   |-c, --styledComponents  |install styled-components lint script
   |-p, --sass              |install sass stylelint config & lint script
