@@ -1,14 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable global-require */
-
 import { program } from 'commander';
+import pkgJson from '../../package.json';
 
 const getNpmVersion = () => {
-  const pkgJson = require('../../package.json');
-
   return pkgJson?.version || '1.0.0';
 };
 

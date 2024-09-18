@@ -1,9 +1,3 @@
-/* eslint-disable node/no-unsupported-features/node-builtins */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
-/* eslint-disable no-console */
-
 import { promises as fsa } from 'fs';
 import path from 'path';
 
@@ -21,10 +15,10 @@ export const updatePackageJson = async ({
   sass: boolean;
   lintStaged: boolean;
 }) => {
-  const packageJson = require(path.join(
-    process.cwd(),
-    'package.json'
-  )) as Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const packageJson = require(
+    path.join(process.cwd(), 'package.json')
+  ) as Record<string, unknown>;
 
   const eslintScript = 'eslint .';
 
@@ -33,8 +27,7 @@ export const updatePackageJson = async ({
   }}'`;
 
   packageJson.scripts = {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    ...(packageJson.scripts as Object | undefined),
+    ...(packageJson.scripts as object | undefined),
     ...{
       lint: `${eslintScript}${styleLint ? ` ; ${stylelintScript}` : ''}`,
       'lint:fix': `npm run lint -- --fix${

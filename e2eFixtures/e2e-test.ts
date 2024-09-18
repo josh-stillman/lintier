@@ -1,9 +1,5 @@
-/* eslint-disable node/no-unpublished-require */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable node/no-missing-require */
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 import fs from 'fs';
 import path from 'path';
 import execa from 'execa';

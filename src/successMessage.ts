@@ -24,11 +24,11 @@ ${chalk.italic.red('2.')} Install eslint${
   styleLint ? ' & stylelint' : ''
 } VS Code extensions:
   • ${eslintLink} ${
-  !styleLint
-    ? ''
-    : `
+    !styleLint
+      ? ''
+      : `
   • ${stylelintLink}`
-}
+  }
 
 ${chalk.italic.red(
   '3.'
@@ -36,7 +36,7 @@ ${chalk.italic.red(
 
 ${chalk.gray(`  "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
-  }"`)}
+  }`)}
 
 ${chalk.cyanBright.italic.underline('Lintier out ✌️')}
 `;

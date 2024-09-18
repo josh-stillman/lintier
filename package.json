@@ -7,8 +7,8 @@
     "build": "rimraf ./bin && tsc",
     "start": "npm run build && node bin/index.js",
     "restart": "node bin/index.js",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix .",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "e2e-build": "docker build -f 'e2e.Dockerfile' -t lintier-e2e:latest '.'",
     "e2e-run": "docker run --rm -i lintier-e2e:latest",
@@ -40,22 +40,21 @@
     "terminal-link": "2.1.1"
   },
   "devDependencies": {
+    "@eslint/js": "9.10.0",
+    "@types/eslint__js": "8.42.3",
     "@types/commander": "2.12.2",
     "@types/inquirer": "7.3.1",
     "@types/jest": "26.0.19",
-    "@types/node": "14.14.10",
-    "@typescript-eslint/eslint-plugin": "4.9.0",
-    "@typescript-eslint/parser": "4.9.0",
-    "eslint": "7.2.0",
-    "eslint-config-airbnb-base": "14.2.1",
-    "eslint-config-prettier": "6.15.0",
-    "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "3.1.4",
+    "@types/node": "22.5.5",
+    "eslint": "9.10.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "globals": "15.9.0",
     "jest": "26.6.3",
-    "prettier": "2.2.1",
+    "prettier": "3.3.3",
     "rimraf": "3.0.2",
     "ts-jest": "26.4.4",
-    "typescript": "4.1.2"
+    "typescript": "5.6.2",
+    "typescript-eslint": "8.6.0"
   }
 }

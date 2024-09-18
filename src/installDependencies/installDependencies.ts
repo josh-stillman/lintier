@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import execa from 'execa';
 import ora from 'ora';
 import chalk from 'chalk';
@@ -32,7 +31,7 @@ export const installDeps = async ({
 
   try {
     await installProcess;
-  } catch (error) {
+  } catch {
     spinner.fail();
     throw new Error(
       'Failed to install dependencies.  Please revert any changes with git.'
@@ -49,6 +48,7 @@ export const installDeps = async ({
 
 export const getDepList = ({
   react,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   node,
   styleLint,
   sass,

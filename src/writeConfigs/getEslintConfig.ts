@@ -11,7 +11,7 @@ export const getEslintConfig = ({
 
 export default tseslint.config(
   {
-    ignores: ['dist', 'build', 'node_modules'],
+    ignores: ['dist', 'bin', 'build', 'node_modules'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
@@ -30,16 +30,17 @@ export default tseslint.config(
       ${react ? 'react,' : ''}
     },
     settings: {
-      ${react ? "react: { version: 'detect' }" : ''},
+      ${react ? "react: { version: 'detect' }," : ''}
     },
     rules: {
-      ${getRules({ node, react }).join('\n      ')},
+      ${getRules({ node, react }).join('\n      ')}
     },
   }
 );
 `;
 
 const getImports = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   node,
   react,
 }: {
@@ -53,6 +54,7 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 ${react ? "import react from 'eslint-plugin-react';" : ''}
 import globals from 'globals';`;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
   // const baseRules = {
   //   '@typescript-eslint/camelcase': 'off',
@@ -78,7 +80,7 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
 
   const reactRules = react
     ? [
-        `'react/react-in-jsx-scope': 0`,
+        `'react/react-in-jsx-scope': 0,`,
         // 'react/require-default-props': 'off',
         // 'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
         // 'react/ state-in-constructor': 'off',
