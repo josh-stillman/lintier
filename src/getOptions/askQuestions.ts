@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import inquirer from 'inquirer';
-import { ConfigAnswers, ProjectType, StyleType } from './getOptions';
+import { ConfigAnswers, ProjectType } from './getOptions';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const askQuestions = async (): Promise<ConfigAnswers> => {
@@ -37,17 +37,16 @@ export const askQuestions = async (): Promise<ConfigAnswers> => {
         ])) as unknown) as { styleLint: boolean })
       : { styleLint: false };
 
-  const styleType = styleLint.styleLint
+  const sass = styleLint.styleLint
     ? (((await inquirer.prompt([
         {
-          type: 'list',
-          name: 'styleType',
-          message: 'Which styling tools does the project use?',
-          choices: ['Styled Components / css-in-js', 'Sass', 'Both', 'Neither'],
-          default: 'Styled Components / css-in-js',
+          type: 'confirm',
+          name: 'sass',
+          message: 'Install SASS config?',
+          default: false,
         },
-      ])) as unknown) as { styleType: StyleType })
-    : { styleType: 'Neither' };
+      ])) as unknown) as { sass: boolean })
+    : { sass: false };
 
   const lintStaged = ((await inquirer.prompt([
     {
@@ -62,6 +61,6 @@ export const askQuestions = async (): Promise<ConfigAnswers> => {
     ...projectType,
     ...styleLint,
     ...lintStaged,
-    ...styleType,
+    ...sass,
   } as ConfigAnswers;
 };

@@ -46,7 +46,6 @@ const main = async () => {
     node,
     // airBnb,
     styleLint,
-    styledComponents,
     sass,
     lintStaged,
   } = await getConfig();
@@ -104,7 +103,6 @@ const main = async () => {
     styleLint,
     lintStaged,
     sass,
-    styledComponents,
   });
 
   if (lintStaged) {

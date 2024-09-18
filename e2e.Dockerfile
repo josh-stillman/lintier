@@ -34,7 +34,7 @@ COPY ./e2eFixtures/badcss.txt ./src/badcss.css
 
 # 4. run lintier in test project directory, installing everything
 
-RUN node ../../lintier/bin/index.js -rnascpl
+RUN node ../../lintier/bin/index.js -rnspl
 
 # 5. run e2e tests
 

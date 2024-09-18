@@ -25,15 +25,11 @@ Alternately, you can specify any of the options below to skip the interactive pr
   |-r, --react             |install react dependencies
   |-n, --node              |install node dependencies
   |-s, --styleLint         |install stylelint
-  |-c, --styledComponents  |install styled-components lint script
   |-p, --sass              |install sass stylelint config & lint script
   |-l, --lintStaged        |install lint-staged and simple-git-hooks
   |--help                  |display help for command
   |-V, --version           |output the version number
 
-### A Note on Styled-Components
-
-The styled-components option just adds .ts/.js files to the package.json script to lint styles.  The stylelint config mentioned in the [styled-components docs](https://styled-components.com/docs/tooling#stylelint) seems to conflict with this eslint setup, so I left it out for now.
 
 ## Troubleshooting
 

@@ -24,10 +24,6 @@ export const getArgs = () => {
     .option('-n, --node', 'install node dependencies')
     // .option('-a, --airBnb', 'install airbnb styleguide')
     .option('-s, --styleLint', 'install stylelint')
-    .option(
-      '-c, --styledComponents',
-      'install styled-components / css-in-js lint script'
-    )
     .option('-p, --sass', 'install sass stylelint config & lint script')
     .option('-l, --lintStaged', 'install lint-staged');
 

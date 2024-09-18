@@ -7,7 +7,6 @@ export interface LintierConfig {
   react: boolean;
   node: boolean;
   styleLint: boolean;
-  styledComponents: boolean;
   sass: boolean;
   // airBnb: boolean;
   lintStaged: boolean;
@@ -16,16 +15,11 @@ export interface LintierConfig {
 export type CommandLineOptions = Partial<LintierConfig>;
 
 export type ProjectType = 'React' | 'Node' | 'Both' | 'Neither';
-export type StyleType =
-  | 'Styled Components  / css-in-js'
-  | 'Sass'
-  | 'Both'
-  | 'Neither';
 
 export interface ConfigAnswers {
   projectType: ProjectType;
   styleLint: boolean;
-  styleType: StyleType;
+  sass: boolean;
   // airBnb: boolean;
   lintStaged: boolean;
 }
@@ -46,7 +40,7 @@ export const transformAnswers = (answers: ConfigAnswers): LintierConfig => {
   const {
     projectType,
     styleLint,
-    styleType,
+    sass,
     /* airBnb, */
     lintStaged,
   } = answers;
@@ -55,9 +49,7 @@ export const transformAnswers = (answers: ConfigAnswers): LintierConfig => {
     react: projectType === 'React' || projectType === 'Both',
     node: projectType === 'Node' || projectType === 'Both',
     styleLint,
-    styledComponents:
-      styleType === 'Styled Components  / css-in-js' || styleType === 'Both',
-    sass: styleType === 'Sass' || styleType === 'Both',
+    sass,
     // airBnb,
     lintStaged,
   };

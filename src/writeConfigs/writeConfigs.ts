@@ -15,11 +15,9 @@ import { getLintStagedConfig } from './getLintStagedConfig';
 export const updatePackageJson = async ({
   styleLint,
   lintStaged,
-  styledComponents,
   sass,
 }: {
   styleLint: boolean;
-  styledComponents: boolean;
   sass: boolean;
   lintStaged: boolean;
 }) => {
@@ -32,15 +30,15 @@ export const updatePackageJson = async ({
 
   const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css${
     sass ? ',scss,sass' : ''
-  }${styledComponents ? ',js,ts,jsx,tsx' : ''}}'`;
+  }}'`;
 
   packageJson.scripts = {
     // eslint-disable-next-line @typescript-eslint/ban-types
     ...(packageJson.scripts as Object | undefined),
     ...{
-      lint: `${eslintScript}${styleLint ? ` && ${stylelintScript}` : ''}`,
+      lint: `${eslintScript}${styleLint ? ` ; ${stylelintScript}` : ''}`,
       'lint:fix': `npm run lint -- --fix${
-        styleLint ? ` && ${stylelintScript} --fix` : ''
+        styleLint ? ` ; ${stylelintScript} --fix` : ''
       }`,
     },
   };
