@@ -65,7 +65,10 @@ export const writeLintStagedConfig = async ({
 }: {
   styleLint: boolean;
 }) =>
-  writeLocalFileString('lint-staged.config.js', getLintStagedConfig(styleLint));
+  writeLocalFileString(
+    'lint-staged.config.mjs',
+    getLintStagedConfig(styleLint)
+  );
 
 // TODO: update arguments
 export const writeEslintConfig = async ({
