@@ -136,13 +136,13 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
   //   'prettier/prettier': 'error',
   // };
 
-  const nodeRules = node
-    ? {
-        'node/no-missing-import': 'off',
-        'node/no-unsupported-features/es-syntax': 'off',
-        'node/shebang': 'off',
-      }
-    : {};
+  // const nodeRules = node
+  //   ? {
+  //       'node/no-missing-import': 'off',
+  //       'node/no-unsupported-features/es-syntax': 'off',
+  //       'node/shebang': 'off',
+  //     }
+  //   : {};
 
   const reactRules = react
     ? {
@@ -155,7 +155,7 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
 
   return {
     // ...baseRules,
-    ...nodeRules,
+    // ...nodeRules,
     ...reactRules,
   };
 };
