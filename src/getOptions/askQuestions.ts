@@ -22,7 +22,7 @@ export const askQuestions = async (): Promise<ConfigAnswers> => {
   };
 
   const styleLint =
-    projectType.projectType === 'React' || projectType.projectType === 'Both'
+    projectType.projectType !== 'Node'
       ? ((await inquirer.prompt([
           {
             type: 'confirm',
