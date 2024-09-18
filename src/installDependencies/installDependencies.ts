@@ -23,12 +23,22 @@ export const installDeps = async ({
 }) => {
   const spinner = ora(chalk.cyan(PROGRESS_MESSAGES.dependencies)).start();
 
-  await execa(useYarn ? 'yarn' : 'npm', [
+  const installProcess = execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
     ...getDepList({ node, react, styleLint, sass, lintStaged }),
     '-E',
     '-D',
   ]);
+
+  try {
+    await installProcess;
+  } catch (error) {
+    spinner.fail();
+    throw new Error(
+      'Failed to install dependencies.  Please revert any changes with git.'
+      // TODO: pinned
+    );
+  }
 
   spinner.succeed(chalk.green(PROGRESS_MESSAGES.dependencies));
 
