@@ -13,6 +13,7 @@ export default tseslint.config(
   {
     ignores: ['dist', 'bin', 'build', 'node_modules'],
   },
+  js.configs.recommended,
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   ${react ? 'react.configs.flat.recommended,' : ''}
@@ -49,6 +50,7 @@ const getImports = ({
 }) => `// @ts-check
 
 import eslint from '@eslint/js';
+import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 ${react ? "import react from 'eslint-plugin-react';" : ''}
