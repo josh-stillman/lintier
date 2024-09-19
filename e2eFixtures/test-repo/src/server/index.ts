@@ -4,6 +4,7 @@ const app = express();
 
 app.use(express.json());
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 app.get<{}, { message: string }>('/', (req, res) => {
   res.json({
     message: 'hello world',
@@ -12,6 +13,5 @@ app.get<{}, { message: string }>('/', (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  /* eslint-disable no-console */
   console.log(`Listening: http://localhost:${port}`);
 });
