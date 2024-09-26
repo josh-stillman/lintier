@@ -10,10 +10,8 @@ import { getLintStagedConfig } from './getLintStagedConfig';
 export const updatePackageJson = async ({
   styleLint,
   lintStaged,
-  sass,
 }: {
   styleLint: boolean;
-  sass: boolean;
   lintStaged: boolean;
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports

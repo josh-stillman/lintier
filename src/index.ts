@@ -100,7 +100,6 @@ const main = async () => {
   await updatePackageJson({
     styleLint,
     lintStaged,
-    sass,
   });
 
   if (lintStaged) {
