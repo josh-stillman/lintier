@@ -2,6 +2,7 @@ import execa from 'execa';
 import ora from 'ora';
 import chalk from 'chalk';
 import { PROGRESS_MESSAGES } from '../progressMessages';
+import { PINNED_VERSIONS } from './pinnedVersions';
 
 export const installDeps = async ({
   useYarn,
@@ -11,6 +12,7 @@ export const installDeps = async ({
   styleLint,
   sass,
   lintStaged,
+  pinned,
 }: {
   useYarn: boolean;
   node: boolean;
@@ -19,12 +21,13 @@ export const installDeps = async ({
   styleLint: boolean;
   sass: boolean;
   lintStaged: boolean;
+  pinned: boolean;
 }) => {
   const spinner = ora(chalk.cyan(PROGRESS_MESSAGES.dependencies)).start();
 
   const installProcess = execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
-    ...getDepList({ node, react, styleLint, sass, lintStaged }),
+    ...getDepList({ node, react, styleLint, sass, lintStaged, pinned }),
     '-E',
     '-D',
   ]);
@@ -53,12 +56,14 @@ export const getDepList = ({
   styleLint,
   sass,
   lintStaged,
+  pinned,
 }: {
   react: boolean;
   node: boolean;
   styleLint: boolean;
   sass: boolean;
   lintStaged: boolean;
+  pinned: boolean;
 }) => {
   return [
     'eslint',
@@ -82,8 +87,22 @@ export const getDepList = ({
         ]
       : []),
     ...(lintStaged ? ['simple-git-hooks', 'lint-staged'] : []),
-  ].map(entry => `${entry}@latest`);
+  ].map(
+    packageName =>
+      `${packageName}@${getVersion({ packageName, usePinned: pinned })}`
+  );
 };
+
+export const getVersion = ({
+  packageName,
+  usePinned,
+}: {
+  packageName: string;
+  usePinned: boolean;
+}) =>
+  !usePinned
+    ? 'latest'
+    : PINNED_VERSIONS[packageName as keyof typeof PINNED_VERSIONS] || 'latest';
 
 // const installAirBnb = async ({
 //   useYarn,

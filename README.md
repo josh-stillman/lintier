@@ -25,14 +25,17 @@ Alternately, you can specify any of these options to skip the interactive prompt
   |-r, --react             |install react dependencies
   |-n, --node              |install node dependencies
   |-s, --styleLint         |install stylelint
-  |-p, --sass              |install sass stylelint config
+  |-c, --sass              |install sass stylelint config
   |-l, --lintStaged        |install lint-staged and simple-git-hooks
+  |-p, --pinned            |use pinned dependency versions that are known to work
   |--help                  |display help for command
   |-V, --version           |output the version number
 
 
-## Troubleshooting
+## Troubleshooting and Pinned Versions
 
-Lintier installs the latest version of the various dependencies, and versions are not pinned.  This helps me keep the package up-to-date as I use it, but it also means breaking changes in those dependencies can break lintier.  A weekly scheduled end-to-end test is also setup to help catch these changes.
+By default, lintier installs the latest version of the various dependencies, which means that breaking changes in those dependencies can break lintier.  A weekly automated end-to-end test helps catch these changes.
+
+If the latest versions aren't working, you can fall back to known working dependency versions by passing the `-p` flag when starting lintier.  (Interactive mode will still start if this is the only flag passed).
 
 If you spot trouble, please open an issue in the GitHub repo.

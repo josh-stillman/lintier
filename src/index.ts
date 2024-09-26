@@ -46,6 +46,7 @@ const main = async () => {
     styleLint,
     sass,
     lintStaged,
+    pinned,
   } = await getConfig();
 
   await installDeps({
@@ -56,6 +57,7 @@ const main = async () => {
     styleLint,
     sass,
     lintStaged,
+    pinned,
   });
 
   const prettierSpinner = ora(chalk.cyan(PROGRESS_MESSAGES.prettier)).start();
