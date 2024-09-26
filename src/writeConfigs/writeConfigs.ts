@@ -22,9 +22,7 @@ export const updatePackageJson = async ({
 
   const eslintScript = 'eslint .';
 
-  const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css${
-    sass ? ',scss,sass' : ''
-  }}'`;
+  const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css,scss,sass}'`;
 
   packageJson.scripts = {
     ...(packageJson.scripts as object | undefined),
