@@ -18,25 +18,25 @@ export const successMessage = (
 )}
 
 ${chalk.italic('Next steps:')}
-${chalk.italic.red('1.')} Edit .rc files to your liking.
+${chalk.italic.red('1.')} Edit config files to your liking.
 
 ${chalk.italic.red('2.')} Install eslint${
   styleLint ? ' & stylelint' : ''
 } VS Code extensions:
   • ${eslintLink} ${
-  !styleLint
-    ? ''
-    : `
+    !styleLint
+      ? ''
+      : `
   • ${stylelintLink}`
-}
+  }
 
 ${chalk.italic.red(
   '3.'
 )} Edit your VS Code settings.json to enable auto-format on save:
 
 ${chalk.gray(`  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  }"`)}
+    "source.fixAll": "explicit"
+  }`)}
 
 ${chalk.cyanBright.italic.underline('Lintier out ✌️')}
 `;

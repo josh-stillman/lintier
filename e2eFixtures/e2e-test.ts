@@ -1,9 +1,5 @@
-/* eslint-disable node/no-unpublished-require */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable node/no-missing-require */
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 import fs from 'fs';
 import path from 'path';
 import execa from 'execa';
@@ -12,14 +8,12 @@ jest.setTimeout(2 * 60 * 1000);
 
 describe('test configs', () => {
   test('configs were written', () => {
-    const eslintExists = fs.existsSync(path.join(process.cwd(), '.eslintrc'));
+    const eslintExists = fs.existsSync(
+      path.join(process.cwd(), 'eslint.config.mjs')
+    );
 
     const prettierExists = fs.existsSync(
       path.join(process.cwd(), '.prettierrc')
-    );
-
-    const eslintTsconfigExists = fs.existsSync(
-      path.join(process.cwd(), 'tsconfig.eslint.json')
     );
 
     const stylelintExists = fs.existsSync(
@@ -27,13 +21,12 @@ describe('test configs', () => {
     );
 
     const lintStagedExists = fs.existsSync(
-      path.join(process.cwd(), 'lint-staged.config.js')
+      path.join(process.cwd(), 'lint-staged.config.mjs')
     );
 
     expect(eslintExists).toBeTruthy();
     expect(prettierExists).toBeTruthy();
     expect(stylelintExists).toBeTruthy();
-    expect(eslintTsconfigExists).toBeTruthy();
     expect(lintStagedExists).toBeTruthy();
   });
 });
@@ -42,22 +35,16 @@ describe('test package.json', () => {
   test('dependencies were installed', () => {
     const { devDependencies } = require('../../package.json');
 
-    expect(devDependencies['@typescript-eslint/eslint-plugin']).toBeDefined();
-    expect(devDependencies['@typescript-eslint/parser']).toBeDefined();
+    expect(devDependencies['typescript-eslint']).toBeDefined();
     expect(devDependencies.eslint).toBeDefined();
-    expect(devDependencies['eslint-config-airbnb-typescript']).toBeDefined();
+    // expect(devDependencies['eslint-config-airbnb-typescript']).toBeDefined();
     expect(devDependencies['eslint-config-prettier']).toBeDefined();
-    expect(devDependencies['eslint-plugin-import']).toBeDefined();
-    expect(devDependencies['eslint-plugin-jsx-a11y']).toBeDefined();
-    expect(devDependencies['eslint-plugin-node']).toBeDefined();
     expect(devDependencies['eslint-plugin-prettier']).toBeDefined();
     expect(devDependencies['eslint-plugin-react']).toBeDefined();
-    expect(devDependencies['eslint-plugin-react-hooks']).toBeDefined();
     expect(devDependencies['lint-staged']).toBeDefined();
     expect(devDependencies.prettier).toBeDefined();
     expect(devDependencies['simple-git-hooks']).toBeDefined();
     expect(devDependencies.stylelint).toBeDefined();
-    expect(devDependencies['stylelint-config-prettier']).toBeDefined();
     expect(devDependencies['stylelint-config-sass-guidelines']).toBeDefined();
     expect(devDependencies['stylelint-config-standard']).toBeDefined();
     expect(devDependencies['stylelint-prettier']).toBeDefined();
@@ -66,10 +53,10 @@ describe('test package.json', () => {
   test('lint scripts were added', () => {
     const { scripts } = require('../../package.json');
     expect(scripts.lint).toEqual(
-      "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore . && stylelint --ignore-path .gitignore '**/*.{css,scss,sass,js,ts,jsx,tsx}'"
+      "eslint . ; stylelint --ignore-path .gitignore '**/*.{css,scss,sass}'"
     );
     expect(scripts['lint:fix']).toEqual(
-      "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore . --fix && stylelint --ignore-path .gitignore '**/*.{css,scss,sass,js,ts,jsx,tsx}' --fix"
+      "npm run lint -- --fix ; stylelint --ignore-path .gitignore '**/*.{css,scss,sass}' --fix"
     );
   });
 
@@ -102,7 +89,7 @@ describe('test eslint', () => {
 
     expect(initialLint).toMatch(/prettier\/prettier/);
 
-    expect(initialLint).toMatch(/eqeqeq/);
+    expect(initialLint).toMatch(/prefer-const/);
 
     // 2. Run lint:fix on badfile
 

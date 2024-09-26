@@ -1,48 +1,34 @@
-/* eslint-disable node/no-unsupported-features/node-builtins */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
-/* eslint-disable no-console */
-
 import { promises as fsa } from 'fs';
 import path from 'path';
+import * as prettier from 'prettier';
 
 import { basePrettierRc } from './basePrettierRc';
 import { getBaseStylelintRc } from './baseStylelintRc';
-import { getEslintRc } from './getEslintrc';
-import { getEslintTsconfig } from './getEslintTsconfig';
+import { getEslintConfig } from './getEslintConfig';
 import { getLintStagedConfig } from './getLintStagedConfig';
 
 export const updatePackageJson = async ({
   styleLint,
   lintStaged,
-  styledComponents,
-  sass,
 }: {
   styleLint: boolean;
-  styledComponents: boolean;
-  sass: boolean;
   lintStaged: boolean;
 }) => {
-  const packageJson = require(path.join(
-    process.cwd(),
-    'package.json'
-  )) as Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const packageJson = require(
+    path.join(process.cwd(), 'package.json')
+  ) as Record<string, unknown>;
 
-  const eslintScript =
-    'eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .';
+  const eslintScript = 'eslint .';
 
-  const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css${
-    sass ? ',scss,sass' : ''
-  }${styledComponents ? ',js,ts,jsx,tsx' : ''}}'`;
+  const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css,scss,sass}'`;
 
   packageJson.scripts = {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    ...(packageJson.scripts as Object | undefined),
+    ...(packageJson.scripts as object | undefined),
     ...{
-      lint: `${eslintScript}${styleLint ? ` && ${stylelintScript}` : ''}`,
-      'lint:fix': `${eslintScript} --fix${
-        styleLint ? ` && ${stylelintScript} --fix` : ''
+      lint: `${eslintScript}${styleLint ? ` ; ${stylelintScript}` : ''}`,
+      'lint:fix': `npm run lint -- --fix${
+        styleLint ? ` ; ${stylelintScript} --fix` : ''
       }`,
     },
   };
@@ -56,9 +42,6 @@ export const updatePackageJson = async ({
   return writeLocalFile('package.json', packageJson);
 };
 
-export const writeEslintTsconfig = async () =>
-  writeLocalFile('tsconfig.eslint.json', getEslintTsconfig());
-
 export const writePrettierRc = async () =>
   writeLocalFile('.prettierrc', basePrettierRc);
 
@@ -70,17 +53,30 @@ export const writeLintStagedConfig = async ({
 }: {
   styleLint: boolean;
 }) =>
-  writeLocalFileString('lint-staged.config.js', getLintStagedConfig(styleLint));
+  writeLocalFileString(
+    'lint-staged.config.mjs',
+    getLintStagedConfig(styleLint)
+  );
 
-export const writeEslintRc = async ({
+// TODO: update arguments
+export const writeEslintConfig = async ({
   node,
   react,
-  airBnb,
-}: {
+}: // airBnb,
+{
   node: boolean;
   react: boolean;
-  airBnb: boolean;
-}) => writeLocalFile('.eslintrc', getEslintRc({ node, react, airBnb }));
+  // airBnb: boolean;
+}) => {
+  const file = getEslintConfig({ react, node });
+
+  const formatted = await prettier.format(file, {
+    ...basePrettierRc,
+    parser: 'typescript',
+  });
+
+  writeLocalFileString('eslint.config.mjs', formatted);
+};
 
 const writeLocalFile = async (
   fileName: string,

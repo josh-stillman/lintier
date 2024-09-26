@@ -1,14 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable global-require */
-
 import { program } from 'commander';
+import pkgJson from '../../package.json';
 
 const getNpmVersion = () => {
-  const pkgJson = require('../../package.json');
-
   return pkgJson?.version || '1.0.0';
 };
 
@@ -22,14 +15,14 @@ export const getArgs = () => {
     )
     .option('-r, --react', 'install react dependencies')
     .option('-n, --node', 'install node dependencies')
-    .option('-a, --airBnb', 'install airbnb styleguide')
+    // .option('-a, --airBnb', 'install airbnb styleguide')
     .option('-s, --styleLint', 'install stylelint')
+    .option('-c, --sass', 'install sass stylelint config & lint script')
+    .option('-l, --lintStaged', 'install lint-staged')
     .option(
-      '-c, --styledComponents',
-      'install styled-components / css-in-js lint script'
-    )
-    .option('-p, --sass', 'install sass stylelint config & lint script')
-    .option('-l, --lintStaged', 'install lint-staged');
+      '-p, --pinned',
+      'use pinned dependency versions that are known to work'
+    );
 
   program.parse(process.argv);
 

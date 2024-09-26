@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint-disable no-console */
-
 import fs from 'fs';
 import path from 'path';
 import { exit } from 'process';
@@ -14,8 +12,7 @@ import { getConfig } from './getOptions/getOptions';
 import { installDeps } from './installDependencies/installDependencies';
 import {
   updatePackageJson,
-  writeEslintRc,
-  writeEslintTsconfig,
+  writeEslintConfig,
   writeLintStagedConfig,
   writePrettierRc,
   writeStylelintRc,
@@ -45,21 +42,22 @@ const main = async () => {
   const {
     react,
     node,
-    airBnb,
+    // airBnb,
     styleLint,
-    styledComponents,
     sass,
     lintStaged,
+    pinned,
   } = await getConfig();
 
   await installDeps({
     useYarn,
     react,
     node,
-    airBnb,
+    // airBnb,
     styleLint,
     sass,
     lintStaged,
+    pinned,
   });
 
   const prettierSpinner = ora(chalk.cyan(PROGRESS_MESSAGES.prettier)).start();
@@ -71,19 +69,13 @@ const main = async () => {
     .succeed(chalk.green(PROGRESS_MESSAGES.prettier))
     .start(chalk.cyan(PROGRESS_MESSAGES.eslint));
 
-  await writeEslintRc({
+  await writeEslintConfig({
     react,
     node,
-    airBnb,
+    // airBnb,
   });
 
-  const tsconfigSpinner = eslintSpinner
-    .succeed(chalk.green(PROGRESS_MESSAGES.eslint))
-    .start(chalk.cyan(PROGRESS_MESSAGES.tsconfig));
-
-  await writeEslintTsconfig();
-
-  tsconfigSpinner.succeed(chalk.green(PROGRESS_MESSAGES.tsconfig));
+  eslintSpinner.succeed(chalk.green(PROGRESS_MESSAGES.eslint));
 
   if (styleLint) {
     const stylelintSpinner = ora(
@@ -110,8 +102,6 @@ const main = async () => {
   await updatePackageJson({
     styleLint,
     lintStaged,
-    sass,
-    styledComponents,
   });
 
   if (lintStaged) {

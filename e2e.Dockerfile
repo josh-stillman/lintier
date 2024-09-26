@@ -1,6 +1,4 @@
-FROM node:14
-
-# SHELL ["/bin/bash", "-c"]
+FROM --platform=linux/amd64 node:lts
 
 RUN mkdir /lintier
 
@@ -14,18 +12,15 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-# 2. setup create-snowpack-app test project
+# 2. setup test vite/react/express project
 
 WORKDIR /test
 
-# RUN npx create-react-app cra-app --template typescript
-RUN npx create-snowpack-app test-app --template @snowpack/app-template-react-typescript
-
-WORKDIR /test/test-app
+COPY ./e2eFixtures/test-repo .
+RUN npm install
+RUN git init
 
 # 3. setup e2e tests
-
-RUN npm install -D jest ts-jest @types/node @types/jest execa@4.1.0
 
 COPY ./e2eFixtures/e2e-test.ts ./src/__tests__/e2e.test.ts
 COPY ./e2eFixtures/e2e.jest.config.js ./jest.config.js
@@ -33,8 +28,7 @@ COPY ./e2eFixtures/badfile.txt ./src/badfile.ts
 COPY ./e2eFixtures/badcss.txt ./src/badcss.css
 
 # 4. run lintier in test project directory, installing everything
-
-RUN node ../../lintier/bin/index.js -rnascpl
+RUN node ../lintier/bin/index.js -rnscl
 
 # 5. run e2e tests
 

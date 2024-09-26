@@ -1,5 +1,5 @@
 export const myFunc =
 () => {
-
-              return 5 == 6;
+                let foo = 5;
+                return foo;
 };

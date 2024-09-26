@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import { askQuestions } from './askQuestions';
 import { getArgs } from './parseArgs';
 
@@ -7,52 +6,56 @@ export interface LintierConfig {
   react: boolean;
   node: boolean;
   styleLint: boolean;
-  styledComponents: boolean;
   sass: boolean;
-  airBnb: boolean;
+  // airBnb: boolean;
   lintStaged: boolean;
+  pinned: boolean;
 }
 
 export type CommandLineOptions = Partial<LintierConfig>;
 
 export type ProjectType = 'React' | 'Node' | 'Both' | 'Neither';
-export type StyleType =
-  | 'Styled Components  / css-in-js'
-  | 'Sass'
-  | 'Both'
-  | 'Neither';
 
 export interface ConfigAnswers {
   projectType: ProjectType;
   styleLint: boolean;
-  styleType: StyleType;
-  airBnb: boolean;
+  sass: boolean;
+  // airBnb: boolean;
   lintStaged: boolean;
 }
 
 export const getConfig = async () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { version, ...clArgs } = getArgs() as CommandLineOptions;
+  const { version, pinned, ...clArgs } = getArgs() as CommandLineOptions;
 
+  // If only the pinned version option is passed, still go to interactive mode
   if (Object.values(clArgs).every(opt => opt === undefined)) {
     const answers = await askQuestions();
-    return transformAnswers(answers);
+
+    return { ...transformAnswers(answers), pinned: !!pinned } as LintierConfig;
   }
 
-  return transformClArgs(clArgs);
+  // otherwise use command line arguments as passed
+  return transformClArgs({ pinned: !!pinned, ...clArgs });
 };
 
-export const transformAnswers = (answers: ConfigAnswers): LintierConfig => {
-  const { projectType, styleLint, styleType, airBnb, lintStaged } = answers;
+export const transformAnswers = (
+  answers: ConfigAnswers
+): Omit<LintierConfig, 'pinned'> => {
+  const {
+    projectType,
+    styleLint,
+    sass,
+    /* airBnb, */
+    lintStaged,
+  } = answers;
 
   return {
     react: projectType === 'React' || projectType === 'Both',
     node: projectType === 'Node' || projectType === 'Both',
     styleLint,
-    styledComponents:
-      styleType === 'Styled Components  / css-in-js' || styleType === 'Both',
-    sass: styleType === 'Sass' || styleType === 'Both',
-    airBnb,
+    sass,
+    // airBnb,
     lintStaged,
   };
 };
