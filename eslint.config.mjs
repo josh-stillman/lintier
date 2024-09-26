@@ -13,7 +13,6 @@ export default tseslint.config(
   js.configs.recommended,
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
-
   eslintPluginPrettierRecommended,
 
   {
