@@ -34,11 +34,10 @@ export const installDeps = async ({
 
   try {
     await installProcess;
-  } catch {
+  } catch (error) {
     spinner.fail();
     throw new Error(
-      'Failed to install dependencies.  Please revert any changes with git.'
-      // TODO: pinned
+      `Failed to install dependencies.  Please revert any changes with git.${!pinned ? ' \n\nYou should try passing the -p flag to use the last-known working dependency versions. This might required updating peer dependencies' : ''}\n\n Error message: ${error}`
     );
   }
 
