@@ -1,5 +1,6 @@
 import { promises as fsa } from 'fs';
 import path from 'path';
+import * as prettier from 'prettier';
 
 import { basePrettierRc } from './basePrettierRc';
 import { getBaseStylelintRc } from './baseStylelintRc';
@@ -68,8 +69,16 @@ export const writeEslintConfig = async ({
   node: boolean;
   react: boolean;
   // airBnb: boolean;
-}) =>
-  writeLocalFileString('eslint.config.mjs', getEslintConfig({ react, node }));
+}) => {
+  const file = getEslintConfig({ react, node });
+
+  const formatted = await prettier.format(file, {
+    ...basePrettierRc,
+    parser: 'typescript',
+  });
+
+  writeLocalFileString('eslint.config.mjs', formatted);
+};
 
 const writeLocalFile = async (
   fileName: string,

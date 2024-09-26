@@ -15,10 +15,13 @@ export default tseslint.config(
   },
   js.configs.recommended,
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
-  ${react ? 'react.configs.flat.recommended,' : ''}
+  ...tseslint.configs.recommended,${
+    react
+      ? `
+  react.configs.flat.recommended,`
+      : ''
+  }
   eslintPluginPrettierRecommended,
-
   {
     languageOptions: {
       globals: {
