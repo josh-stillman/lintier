@@ -2,7 +2,7 @@ import execa from 'execa';
 import ora from 'ora';
 import chalk from 'chalk';
 import { PROGRESS_MESSAGES } from '../progressMessages';
-import { PINNED_VERSIONS } from './pinnedVersions';
+import PINNED_VERSIONS from './pinnedVersions.json';
 
 export const installDeps = async ({
   useYarn,
