@@ -50,7 +50,7 @@ export const installDeps = async ({
 
 export const getDepList = ({
   react,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   node,
   styleLint,
   sass,
@@ -73,7 +73,7 @@ export const getDepList = ({
     'eslint-plugin-prettier',
     'globals',
     'typescript-eslint',
-    // ...(node ? ['eslint-plugin-node'] : []),
+    ...(node ? ['eslint-plugin-n'] : []),
     ...(react
       ? ['eslint-plugin-react' /* , 'eslint-plugin-react-hooks' */]
       : []),
