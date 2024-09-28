@@ -4,6 +4,7 @@ export const PINNED_VERSIONS = {
   eslint: '9.11.1',
   'eslint-config-prettier': '9.1.0',
   'eslint-plugin-prettier': '5.2.1',
+  'eslint-plugin-n': '17.10.3',
   'eslint-plugin-react': '7.36.1',
   globals: '15.9.0',
   'lint-staged': '15.2.10',

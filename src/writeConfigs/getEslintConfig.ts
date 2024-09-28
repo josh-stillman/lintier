@@ -20,6 +20,11 @@ export default tseslint.config(
       ? `
   react.configs.flat.recommended,`
       : ''
+  }${
+    node
+      ? `
+  nodePlugin.configs['flat/recommended'],`
+      : ''
   }
   eslintPluginPrettierRecommended,
   {
@@ -44,7 +49,6 @@ export default tseslint.config(
 `;
 
 const getImports = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   node,
   react,
 }: {
@@ -55,8 +59,17 @@ const getImports = ({
 import eslint from '@eslint/js';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-${react ? "import react from 'eslint-plugin-react';" : ''}
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';${
+  react
+    ? `
+  import react from 'eslint-plugin-react';`
+    : ''
+}${
+  node
+    ? `
+  import nodePlugin from 'eslint-plugin-n';`
+    : ''
+}
 import globals from 'globals';`;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
