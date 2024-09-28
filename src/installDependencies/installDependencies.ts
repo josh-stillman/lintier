@@ -2,7 +2,7 @@ import execa from 'execa';
 import ora from 'ora';
 import chalk from 'chalk';
 import { PROGRESS_MESSAGES } from '../progressMessages';
-import { PINNED_VERSIONS } from './pinnedVersions';
+import PINNED_VERSIONS from './pinnedVersions.json';
 
 export const installDeps = async ({
   useYarn,
@@ -27,7 +27,7 @@ export const installDeps = async ({
 
   const installProcess = execa(useYarn ? 'yarn' : 'npm', [
     useYarn ? 'add' : 'install',
-    ...getDepList({ node, react, styleLint, sass, lintStaged, pinned }),
+    ...(await getDepList({ node, react, styleLint, sass, lintStaged, pinned })),
     '-E',
     '-D',
   ]);
@@ -48,9 +48,8 @@ export const installDeps = async ({
   // }
 };
 
-export const getDepList = ({
+export const getDepList = async ({
   react,
-
   node,
   styleLint,
   sass,
@@ -64,6 +63,27 @@ export const getDepList = ({
   lintStaged: boolean;
   pinned: boolean;
 }) => {
+  let pinnedJson = PINNED_VERSIONS;
+
+  if (pinned) {
+    // fetch updated list of pinned versions, falling back to version from published package
+    try {
+      const remotePinned = await fetch(
+        'https://raw.githubusercontent.com/josh-stillman/lintier/refs/heads/main/src/installDependencies/pinnedVersions.json'
+      );
+
+      const json = (await remotePinned.json()) as typeof PINNED_VERSIONS;
+
+      pinnedJson = json;
+
+      console.log(`Using pinned versions from ${pinnedJson['_UPDATED_AT']}`);
+    } catch (error) {
+      console.error(
+        `Error fetching remote list of pinned versions, falling back to list from ${PINNED_VERSIONS['_UPDATED_AT']}\n\n${error}`
+      );
+    }
+  }
+
   return [
     'eslint',
     'prettier',
@@ -88,20 +108,22 @@ export const getDepList = ({
     ...(lintStaged ? ['simple-git-hooks', 'lint-staged'] : []),
   ].map(
     packageName =>
-      `${packageName}@${getVersion({ packageName, usePinned: pinned })}`
+      `${packageName}@${getVersion({ packageName, usePinned: pinned, pinnedJson })}`
   );
 };
 
 export const getVersion = ({
   packageName,
   usePinned,
+  pinnedJson,
 }: {
   packageName: string;
   usePinned: boolean;
+  pinnedJson: typeof PINNED_VERSIONS;
 }) =>
   !usePinned
     ? 'latest'
-    : PINNED_VERSIONS[packageName as keyof typeof PINNED_VERSIONS] || 'latest';
+    : pinnedJson[packageName as keyof typeof PINNED_VERSIONS] || 'latest';
 
 // const installAirBnb = async ({
 //   useYarn,
