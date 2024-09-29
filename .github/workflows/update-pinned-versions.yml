@@ -2,7 +2,7 @@ name: Update Pinned Versions
 
 on:
   workflow_run:
-    workflows: e2e
+    workflows: [e2e]
     types:
       - completed
 
