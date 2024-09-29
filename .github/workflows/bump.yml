@@ -5,7 +5,7 @@ on:
     workflows: [e2e]
     types:
       - completed
-    branches: [js/update-action]
+    # branches: [js/update-action]
 
 jobs:
   update:
