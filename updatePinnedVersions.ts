@@ -30,7 +30,7 @@ const main = async () => {
   console.log({ newPackages });
 
   if (!Object.keys(newPackages).length) {
-    console.error('no new package version');
+    console.error('no new package versions to update, exiting.');
     process.exit(1);
   }
 
