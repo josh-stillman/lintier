@@ -1,0 +1,31 @@
+name: Bump Pinned Versions
+
+on:
+  workflow_run:
+    workflows: [e2e]
+    types:
+      - completed
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+    - name: Install Node Modules
+      run: npm ci
+    - name: Update Pinned Versions
+      id: update-script
+      run: npm run update-pinned-versions
+    - name: Create PR
+      if: steps.update-script.outcome == 'success'
+      uses: peter-evans/create-pull-request@v7
+      with:
+        commit-message: Update pinned versions
+        title: Update Pinned Versions
+        branch: update-pinned-versions
