@@ -1,4 +1,4 @@
-name: Update Pinned Versions
+name: Bump Pinned Versions
 
 on:
   workflow_run:
