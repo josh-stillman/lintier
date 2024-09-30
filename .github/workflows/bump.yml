@@ -23,6 +23,7 @@ jobs:
     - name: Update Pinned Versions
       id: update-script
       run: npm run update-pinned-versions
+      continue-on-error: true
     - name: Create PR
       if: steps.update-script.outcome == 'success'
       uses: peter-evans/create-pull-request@v7
