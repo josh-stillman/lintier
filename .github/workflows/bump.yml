@@ -30,7 +30,7 @@ jobs:
         commit-message: Update pinned versions
         title: Update Pinned Versions
         branch: update-pinned-versions
-    - name: Create PR
+    - name: Exit if no new versions
       if: steps.update-script.outcome == 'failure'
       run: |
           echo "No new dependencies, exiting."
