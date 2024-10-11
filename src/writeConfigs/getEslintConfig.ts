@@ -35,8 +35,12 @@ export default tseslint.config(
         ...globals.jest,
       },
     },
-    plugins: {
-      ${react ? 'react,' : ''}
+    plugins: {${
+      react
+        ? `react,
+      'react-hooks': reactHooks,`
+        : ''
+    }
     },
     settings: {
       ${react ? "react: { version: 'detect' }," : ''}
@@ -62,7 +66,8 @@ import tseslint from 'typescript-eslint';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';${
   react
     ? `
-  import react from 'eslint-plugin-react';`
+  import react from 'eslint-plugin-react';
+  import reactHooks from 'eslint-plugin-react-hooks';`
     : ''
 }${
   node
@@ -99,6 +104,7 @@ const getRules = ({ react, node }: { react: boolean; node: boolean }) => {
   const reactRules = react
     ? [
         `'react/react-in-jsx-scope': 0,`,
+        '...reactHooks.configs.recommended.rules',
         // 'react/require-default-props': 'off',
         // 'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
         // 'react/ state-in-constructor': 'off',
