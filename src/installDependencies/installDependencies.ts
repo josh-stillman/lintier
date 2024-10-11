@@ -94,9 +94,7 @@ export const getDepList = async ({
     'globals',
     'typescript-eslint',
     ...(node ? ['eslint-plugin-n'] : []),
-    ...(react
-      ? ['eslint-plugin-react' /* , 'eslint-plugin-react-hooks' */]
-      : []),
+    ...(react ? ['eslint-plugin-react', 'eslint-plugin-react-hooks'] : []),
     ...(styleLint
       ? [
           'stylelint',

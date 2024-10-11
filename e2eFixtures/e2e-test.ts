@@ -41,6 +41,7 @@ describe('test package.json', () => {
     expect(devDependencies['eslint-config-prettier']).toBeDefined();
     expect(devDependencies['eslint-plugin-prettier']).toBeDefined();
     expect(devDependencies['eslint-plugin-react']).toBeDefined();
+    expect(devDependencies['eslint-plugin-react-hooks']).toBeDefined();
     expect(devDependencies['lint-staged']).toBeDefined();
     expect(devDependencies.prettier).toBeDefined();
     expect(devDependencies['simple-git-hooks']).toBeDefined();
