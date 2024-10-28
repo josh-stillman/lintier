@@ -25,12 +25,7 @@ export const updatePackageJson = async ({
 
   packageJson.scripts = {
     ...(packageJson.scripts as object | undefined),
-    ...{
-      lint: `${eslintScript}${styleLint ? ` ; ${stylelintScript}` : ''}`,
-      'lint:fix': `npm run lint -- --fix${
-        styleLint ? ` ; ${stylelintScript} --fix` : ''
-      }`,
-    },
+    ...getLintScripts(styleLint),
   };
 
   if (lintStaged) {
@@ -40,6 +35,19 @@ export const updatePackageJson = async ({
   }
 
   return writeLocalFile('package.json', packageJson);
+};
+
+export const getLintScripts = (styleLint: boolean) => {
+  const eslintScript = 'eslint .';
+
+  const stylelintScript = `stylelint --ignore-path .gitignore '**/*.{css,scss,sass}'`;
+
+  return {
+    lint: `npm run lint-code${styleLint ? ` ; npm run lint-styles` : ''}`,
+    ['lint:fix']: `npm run lint-code -- --fix${styleLint ? ` ; npm run lint-styles -- --fix` : ''}`,
+    ['lint-code']: `${eslintScript}`,
+    ...(styleLint ? { ['lint-styles']: `${stylelintScript}` } : {}),
+  };
 };
 
 export const writePrettierRc = async () =>
