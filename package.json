@@ -1,6 +1,6 @@
 {
   "name": "lintier",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Setup ESLint & Prettier in TypeScript projects.",
   "main": "./bin/index.js",
   "scripts": {
