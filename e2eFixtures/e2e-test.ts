@@ -53,11 +53,13 @@ describe('test package.json', () => {
 
   test('lint scripts were added', () => {
     const { scripts } = require('../../package.json');
-    expect(scripts.lint).toEqual(
-      "eslint . ; stylelint --ignore-path .gitignore '**/*.{css,scss,sass}'"
+    expect(scripts.lint).toEqual('npm run lint-code ; npm run lint-styles');
+    expect(scripts['lint-code']).toEqual('eslint .');
+    expect(scripts['lint-styles']).toEqual(
+      `stylelint --ignore-path .gitignore '**/*.{css,scss,sass}'`
     );
     expect(scripts['lint:fix']).toEqual(
-      "npm run lint -- --fix ; stylelint --ignore-path .gitignore '**/*.{css,scss,sass}' --fix"
+      'npm run lint-code -- --fix ; npm run lint-styles -- --fix'
     );
   });
 
