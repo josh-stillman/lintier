@@ -1,14 +1,14 @@
 {
-  "_UPDATED_AT": "12/16/2024",
+  "_UPDATED_AT": "12/23/2024",
   "@eslint/js": "9.17.0",
   "@types/eslint__js": "8.42.3",
   "eslint": "9.17.0",
   "eslint-config-prettier": "9.1.0",
   "eslint-plugin-prettier": "5.2.1",
-  "eslint-plugin-n": "17.15.0",
+  "eslint-plugin-n": "17.15.1",
   "eslint-plugin-react": "7.37.2",
   "eslint-plugin-react-hooks": "5.1.0",
-  "globals": "15.13.0",
+  "globals": "15.14.0",
   "lint-staged": "15.2.11",
   "prettier": "3.4.2",
   "simple-git-hooks": "2.11.1",
@@ -16,5 +16,5 @@
   "stylelint-config-sass-guidelines": "12.1.0",
   "stylelint-config-standard": "36.0.1",
   "stylelint-prettier": "5.0.2",
-  "typescript-eslint": "8.18.0"
+  "typescript-eslint": "8.18.1"
 }
