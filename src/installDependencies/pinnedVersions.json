@@ -1,5 +1,5 @@
 {
-  "_UPDATED_AT": "3/10/2025",
+  "_UPDATED_AT": "3/17/2025",
   "@eslint/js": "9.22.0",
   "@types/eslint__js": "9.14.0",
   "eslint": "9.22.0",
@@ -9,12 +9,12 @@
   "eslint-plugin-react": "7.37.4",
   "eslint-plugin-react-hooks": "5.2.0",
   "globals": "16.0.0",
-  "lint-staged": "15.4.3",
+  "lint-staged": "15.5.0",
   "prettier": "3.5.3",
   "simple-git-hooks": "2.11.1",
-  "stylelint": "16.15.0",
+  "stylelint": "16.16.0",
   "stylelint-config-sass-guidelines": "12.1.0",
   "stylelint-config-standard": "37.0.0",
   "stylelint-prettier": "5.0.3",
-  "typescript-eslint": "8.26.0"
+  "typescript-eslint": "8.26.1"
 }
