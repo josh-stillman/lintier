@@ -1,8 +1,8 @@
 {
-  "_UPDATED_AT": "4/14/2025",
-  "@eslint/js": "9.24.0",
+  "_UPDATED_AT": "4/21/2025",
+  "@eslint/js": "9.25.0",
   "@types/eslint__js": "9.14.0",
-  "eslint": "9.24.0",
+  "eslint": "9.25.0",
   "eslint-config-prettier": "10.1.2",
   "eslint-plugin-prettier": "5.2.6",
   "eslint-plugin-n": "17.17.0",
@@ -16,5 +16,5 @@
   "stylelint-config-sass-guidelines": "12.1.0",
   "stylelint-config-standard": "38.0.0",
   "stylelint-prettier": "5.0.3",
-  "typescript-eslint": "8.29.1"
+  "typescript-eslint": "8.30.1"
 }
